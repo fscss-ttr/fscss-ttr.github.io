@@ -1,1 +1,5 @@
 
+User-agent: *
+Disallow: /private/
+Allow: /
+Sitemap: https://invites.devtem.org/sitemap.xml
