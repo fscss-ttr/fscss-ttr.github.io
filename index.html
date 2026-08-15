@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem</title>
+  <meta name="description" content="A hands-on hub for learning FSCSS and its modules — st-core, form, circle-progress, customizable, and cube — and combining them into real interfaces.">
+  
+  <!-- SEO / Canonical -->
+  <link rel="canonical" href="https://hub.devtem.org/">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://hub.devtem.org/sitemap.xml">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph (social sharing) -->
+  <meta property="og:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
+  <meta property="og:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
+  <meta property="og:url" content="https://hub.devtem.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="FSCSS Hub">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
+  <meta name="twitter:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
+  <meta name="twitter:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
+  
+  <!-- Favicon & fonts (keep existing) -->
+  <link rel="icon" href="https://fscss.devtem.org/assets/images/fscss.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/global.css">
+<style>
+  /* ---- Page-specific styles for index.html ---------------------------- */
+
+  /* Hero */
+  .hero{ position: relative; padding: clamp(56px,9vw,96px) 0 clamp(40px,6vw,64px); overflow: hidden; }
+  .hero::before{
+    content:''; position: absolute; top: -220px; left: 50%; width: 900px; height: 620px; transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(143,107,255,.28), transparent 70%); pointer-events: none;
+  }
+  .hero-grid{ display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; position: relative; }
+  .hero h1{ font-family: var(--font-display); font-size: clamp(34px, 5vw, 58px); line-height: 1.06; font-weight: 700; letter-spacing: -.015em; }
+  .hero h1 em{ font-style: normal; background: linear-gradient(120deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lead{ margin-top: 20px; font-size: 17.5px; color: var(--text-dim); max-width: 520px; }
+  .hero-cta{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .hero-stats{ display: flex; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-stats div b{ display: block; font-family: var(--font-display); font-size: 22px; }
+  .hero-stats div span{ font-size: 12.5px; color: var(--muted); }
+
+  /* install line */
+  .install-line{ margin-top: 26px; display: flex; align-items: center; gap: 10px; max-width: 420px; }
+  .install-line .code{ flex: 1; }
+  .install-line .code pre{ padding: 12px 16px; }
+
+  /* shorthand -> compiled toggle demo */
+  .demo-panel{ border-radius: var(--radius-xl); border: 1px solid var(--border); background: var(--surface); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  .demo-tabs{ display: flex; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  .demo-tabs button{
+    flex: 1; padding: 13px; background: transparent; border: 0; cursor: pointer; color: var(--muted);
+    font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em;
+    border-bottom: 2px solid transparent; transition: color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .demo-tabs button.is-active{ color: var(--text); border-bottom-color: var(--accent); }
+  .demo-body{ position: relative; min-height: 300px; }
+  .demo-pane{ display: none; padding: 20px 22px; font-family: var(--font-mono); font-size: 13px; line-height: 1.75; }
+  .demo-pane.is-active{ display: block; }
+  .demo-foot{ padding: 12px 22px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12.5px; display: flex; align-items: center; gap: 8px; }
+  .demo-foot .dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+
+  /* logo / ecosystem strip */
+  .strip{ border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 26px 0; }
+  .strip .wrap{ display: flex; align-items: center; gap: 34px; flex-wrap: wrap; justify-content: space-between; }
+  .strip-label{ font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; flex: none; }
+  .strip-logos{ display: flex; gap: 30px; flex-wrap: wrap; align-items: center; }
+  .strip-logos a{ display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--text-dim); transition: color .2s var(--ease); }
+  .strip-logos a:hover{ color: var(--text); }
+  .strip-logos a span.dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
+
+  /* pillars */
+  .pillars{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pillar-num{ font-family: var(--font-mono); color: var(--muted); font-size: 12.5px; margin-bottom: 14px; }
+  .pillar h3{ font-family: var(--font-display); font-size: 19px; margin-bottom: 10px; }
+  .pillar p{ color: var(--text-dim); font-size: 14.5px; }
+
+  /* syntax primer */
+  .primer-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; 
+    max-width: 100%;
+  }
+  .primer-card h4{ font-family: var(--font-display); font-size: 15.5px; margin-bottom: 4px; }
+  .primer-card p.desc{ color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+  .primer-card .code pre{ padding: 14px 16px; font-size: 12.3px; }
+
+  /* module cards */
+  .module-list{ display: flex; flex-direction: column; gap: 20px; }
+  .module{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-xl);
+    background: var(--card); overflow: hidden;
+  }
+  .module-info{ padding: clamp(24px,3vw,36px); display: flex; flex-direction: column; }
+  .module-shot{ padding: clamp(24px,3vw,36px); background: var(--surface); display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--border); }
+  .module-shot .shot-placeholder{ width: 100%; height: 100%; min-height: 200px; }
+  .module-name{ font-family: var(--font-mono); font-size: 13px; color: var(--accent-2); margin-bottom: 10px; }
+  .module h3{ font-family: var(--font-display); font-size: 24px; margin-bottom: 10px; }
+  .module p.desc{ color: var(--text-dim); font-size: 14.5px; margin-bottom: 18px; }
+  .module-mixins{ display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+  .module .code{ margin-bottom: 18px; }
+  .module .code pre{ font-size: 12px; padding: 14px 16px; }
+  .module-links{ display: flex; gap: 10px; margin-top: auto; flex-wrap: wrap; }
+  @media (max-width: 860px){
+    .module{ grid-template-columns: 1fr; }
+    .module-shot{ border-left: 0; border-top: 1px solid var(--border); order: -1; }
+  }
+
+  /* combine section */
+  .combine-panel{ display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; background: var(--card); }
+  .combine-info{ padding: clamp(28px,4vw,44px); }
+  .combine-info ol{ margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .combine-info li{ display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; color: var(--text-dim); }
+  .combine-info li b{ font-family: var(--font-mono); color: var(--accent-2); flex: none; width: 22px; }
+  .combine-shot{ border-left: 1px solid var(--border); padding: clamp(28px,4vw,44px); background: var(--surface); }
+  .combine-shot .shot-placeholder{ height: 100%; min-height: 320px; }
+  @media (max-width: 860px){
+    .combine-panel{ grid-template-columns: 1fr; }
+    .combine-shot{ border-left: 0; border-top: 1px solid var(--border); }
+  }
+
+  /* sponsors */
+  .sponsor-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .sponsor-card{ text-align: center; padding: 32px 22px; }
+  .sponsor-card .mark{ width: 46px; height: 46px; border-radius: 12px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; color: #100e1c; font-size: 18px; }
+  .sponsor-card h4{ font-family: var(--font-display); font-size: 16px; margin-bottom: 6px; }
+  .sponsor-card p{ font-size: 13px; color: var(--muted); }
+  .sponsor-cta{ text-align: center; margin-top: 26px; color: var(--text-dim); font-size: 14.5px; }
+
+  /* resources */
+  .resource-grid{ display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: start; }
+  .article-list{ display: flex; flex-direction: column; }
+  .article-row{ display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 4px; border-bottom: 1px solid var(--border); }
+  .article-row:last-child{ border-bottom: 0; }
+  .article-row a.title{ font-size: 14.5px; color: var(--text); transition: color .2s var(--ease); }
+  .article-row a.title:hover{ color: var(--accent-2); }
+  .article-row .tag{ font-family: var(--font-mono); font-size: 11px; color: var(--muted); flex: none; }
+  .resource-side{ display: flex; flex-direction: column; gap: 14px; }
+  .link-card{ display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; }
+  .link-card .l-name{ font-family: var(--font-display); font-size: 14.5px; }
+  .link-card .l-desc{ font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* final cta */
+  .final-cta{ text-align: center; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: clamp(40px,6vw,72px) 24px; background: radial-gradient(circle at 50% 0%, var(--accent-soft), transparent 60%); }
+  .final-cta h2{ font-family: var(--font-display); font-size: clamp(26px,4vw,38px); margin-bottom: 14px; }
+  .final-cta p{ color: var(--text-dim); max-width: 480px; margin: 0 auto 28px; }
+  .final-cta .hero-cta{ justify-content: center; }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .pillars, .primer-grid, .sponsor-grid{ grid-template-columns: 1fr 1fr; }
+    .resource-grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px){
+    .pillars, .primer-grid, .sponsor-grid{ grid-template-columns: 1fr; }
+    .hero-stats{ gap: 20px; }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a href="/" class="brand">
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.1.24</span>
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="#syntax">Syntax</a>
+      <a href="#modules">Modules</a>
+      <a href="#combine">Build</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#resources">Resources</a>
+    </nav>
+
+    <div class="nav-actions">
+      <label class="theme-toggle" title="Toggle light / dark">
+        <input type="checkbox" data-theme-toggle aria-label="Toggle light theme">
+        <span class="knob"></span>
+      </label>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub</a>
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div data-reveal>
+        <span class="eyebrow">Figured Shorthand CSS · Learning &amp; build hub</span>
+        <h1>Write shorthand.<br>Ship <em>real CSS</em>.</h1>
+        <p class="lead">A hands-on home for the FSCSS ecosystem — the language itself, plus the modules built on top of it: charts, forms, progress rings, page shells, and 3D. Learn the syntax, then combine the modules into things that actually ship.</p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#combine">See it combined</a>
+          <a class="btn btn-ghost" href="#modules">Browse modules</a>
+        </div>
+
+        <div class="install-line">
+          <div class="code">
+            <pre><span class="tok-com">$</span> npm install fscss</pre>
+          </div>
+          <button class="copy-btn" data-copy>copy</button>
+        </div>
+
+        <div class="hero-stats">
+          <div><b>10+</b><span>modules in the ecosystem</span></div>
+          <div><b>~10kb</b><span>CDN runtime</span></div>
+          <div><b>~0.5kb</b><span>compiled, per module</span></div>
+          <div><b>0</b><span>required JS runtime</span></div>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <div class="demo-panel">
+          <div class="demo-tabs">
+            <button class="is-active" data-tab="write">You write</button>
+            <button data-tab="get">FSCSS compiles to</button>
+          </div>
+          <div class="demo-body">
+            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* variables + a style store */</span>
+<span class="tok-key">$primary</span>: #8f6bff;
+<span class="tok-key">$radius</span>: <span class="tok-num">12px</span>;
+
+<span class="tok-at">@fun</span>(card-style){
+  background: <span class="tok-str">white</span>;
+  border-radius: <span class="tok-key">$radius</span>;
+  box-shadow: <span class="tok-num">0 4px 6px</span> rgba(0,0,0,.1);
+}
+
+.card {
+  <span class="tok-at">@fun</span>.card-style
+  border: <span class="tok-num">1px</span> solid <span class="tok-key">$primary</span>;
+}</pre></div>
+            <div class="demo-pane" data-pane="get"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* plain, browser-ready CSS */</span>
+.card {
+  background: <span class="tok-str">white</span>;
+  border-radius: <span class="tok-num">12px</span>;
+  box-shadow: <span class="tok-num">0 4px 6px</span> rgba(0,0,0,.1);
+  border: <span class="tok-num">1px</span> solid #8f6bff;
+}</pre></div>
+          </div>
+          <div class="demo-foot"><span class="dot"></span> Same output whether compiled via CLI or resolved live by the CDN runtime.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== ECOSYSTEM LOGO STRIP =================== -->
+  <div class="strip">
+    <div class="wrap">
+      <span class="strip-label">Built on FSCSS</span>
+      <div class="strip-logos">
+        <a href="https://devtem.org" target="_blank" rel="noopener"><span class="dot"></span>DevTemple</a>
+        <a href="https://fscss.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>FSCSS Docs</a>
+        <a href="https://design.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>devtemDesign</a>
+        <a href="https://invites.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>D Invites</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ WHAT IS ========================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">What FSCSS actually is</span>
+        <h2>A preprocessor that stays out of your way</h2>
+        <p>FSCSS (Figured Shorthand CSS) compiles a shorthand dialect of CSS into plain, standard CSS — either ahead of time with the CLI, or live in the browser via a small runtime script. No build step is required to try it.</p>
+      </div>
+
+      <div class="pillars">
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Variables &amp; stores</div>
+          <h3>Less repetition</h3>
+          <p>Define <code class="mono">$variables</code> once and reuse them anywhere. Group repeated declarations into a named <code class="mono">@fun</code> store and apply the whole block with one line.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Reusable blocks</div>
+          <h3>@define, with parameters</h3>
+          <p><code class="mono">@define</code> turns a block into a parameterized mixin — pass values in, get a fully-resolved rule out. This is how every module in the ecosystem ships its components.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Two ways to ship</div>
+          <h3>Compile or run live</h3>
+          <p>Use the CDN runtime for prototyping — it compiles in-browser on load. Switch to the CLI for production and ship zero-runtime, plain <code class="mono">.css</code> instead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SYNTAX PRIMER ===================== -->
+  <section class="section" id="syntax">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Syntax primer</span>
+        <h2>Enough FSCSS to read every example on this page</h2>
+        <p>Six pieces of syntax cover almost everything the modules below use. The full reference lives in the docs.</p>
+      </div>
+
+      <div class="primer-grid">
+        <div class="card primer-card" data-reveal>
+          <h4>Variables</h4>
+          <p class="desc">Reusable values, resolved at compile time.</p>
+          <div class="code"><pre><span class="tok-key">$primary-color</span>: #2563eb;
+.btn { background: <span class="tok-key">$primary-color</span>; }</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>@fun style stores</h4>
+          <p class="desc">Group properties, apply the group by name.</p>
+          <div class="code"><pre><span class="tok-at">@fun</span>(card){ padding: <span class="tok-num">1.5rem</span>; }
+.card { <span class="tok-at">@fun</span>.card }</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>@define — parameterized</h4>
+          <p class="desc">A mixin that takes arguments.</p>
+          <div class="code"><pre><span class="tok-at">@define</span> card(bg, fg){
+  background: <span class="tok-at">@use</span>(bg);
+  color: <span class="tok-at">@use</span>(fg);
+}
+.card { <span class="tok-at">@card</span>(#079, #ddd) }</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>@import — selective</h4>
+          <p class="desc">Pull specific mixins from a module, or all of them.</p>
+          <div class="code"><pre><span class="tok-at">@import</span>((page-hero, page-btn) from customizable)
+<span class="tok-at">@import</span>((*) from st-core)</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>@event — logic</h4>
+          <p class="desc">Conditional values, resolved in CSS itself.</p>
+          <div class="code"><pre><span class="tok-at">@event</span> tone(v){
+  if v &lt;= <span class="tok-num">30</span> { return: <span class="tok-str">#D69308</span> }
+  el { return: <span class="tok-str">#26FF00</span> }
+}</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>@arr — arrays &amp; loops</h4>
+          <p class="desc">Generate a run of classes without hand-writing each one.</p>
+          <div class="code"><pre><span class="tok-at">@arr</span> steps[count(<span class="tok-num">100</span>)]
+.p-<span class="tok-at">@arr</span>.steps[]{
+  <span class="tok-key">$v</span>: <span class="tok-at">@arr</span>.steps[];
+}</pre></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ MODULES ============================ -->
+  <section class="section" id="modules">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">The module ecosystem</span>
+        <h2>Top-Five modules around the philosophy</h2>
+        <p>Each module solves one hard visual problem in pure CSS — data lives in custom properties, shape lives in <code class="mono">clip-path</code>, gradients, and transforms. JavaScript, where it appears at all, only ever writes a variable.</p>
+      </div>
+
+      <div class="module-list">
+
+        <!-- st-core -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">st-core.fscss</div>
+            <h3>Charts and dashboards, zero JS charting library</h3>
+            <p class="desc">Line charts, area fills, grids, axes, and stat cards built entirely from <code class="mono">clip-path: polygon()</code> and eight CSS custom properties (<code class="mono">--st-p1</code>–<code class="mono">--st-p8</code>). Update a chart at runtime by writing a variable — the browser repaints the shape natively, no redraw.</p>
+            <div class="module-mixins">
+              <span class="pill">@st-root</span>
+              <span class="pill">@st-chart-line</span>
+              <span class="pill">@st-chart-fill</span>
+              <span class="pill">@st-chart-dots</span>
+              <span class="pill">@st-stat-card</span>
+              <span class="pill">@st-cat-bar-fill</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-stcore">copy</button></div>
+              <pre class="m-stcore"><span class="tok-at">@import</span>((*) from st-core)
+<span class="tok-at">@st-root</span>()
+<span class="tok-at">@st-chart-fill</span>(.chart-fill)
+<span class="tok-at">@st-chart-line</span>(.chart-line)</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/st-core.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss/i-built-a-live-trading-dashboard-with-zero-chartjs-just-css-custom-properties-26c0" target="_blank" rel="noopener">Read the write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+<img src="https://media2.dev.to/dynamic/image/width=1280,height=720,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F40jmbtsgup65yztwydt6.jpg" loading="lazy" decoding="async">
+          </div>
+        </article>
+
+        <!-- form -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">form.fscss</div>
+            <h3>Modern form interactions, no form library</h3>
+            <p class="desc">Floating labels run on <code class="mono">:placeholder-shown</code>. Checkboxes, radios, and a switch use the checkbox-hack with a hand-drawn checkmark from two rotated borders — no icon font, no SVG. Validation states toggle with one class name.</p>
+            <div class="module-mixins">
+              <span class="pill">@form-root</span>
+              <span class="pill">@form-float</span>
+              <span class="pill">@form-checkbox</span>
+              <span class="pill">@form-switch</span>
+              <span class="pill">@form-validation</span>
+              <span class="pill">@form-btn-primary</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-form">copy</button></div>
+              <pre class="m-form"><span class="tok-at">@import</span>((*) from form)
+<span class="tok-at">@form-root</span>()
+<span class="tok-at">@form-float</span>(.form-group, .form-input, .form-label)
+<span class="tok-at">@form-btn-primary</span>(.form-btn-primary)</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/form.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss/creating-modern-forms-with-formfscss-pure-css-4801" target="_blank" rel="noopener">Read the write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fepkahanv1aoudyfujlz5.jpg" loading="lazy" decoding="async">
+          </div>
+        </article>
+
+        <!-- circle-progress -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">circle-progress.fscss</div>
+            <h3>A progress ring that decides its own color</h3>
+            <p class="desc">JavaScript only ever writes one value — a percentage class name. Everything visual, including which color a given value should glow, is decided inside FSCSS itself with <code class="mono">@event</code> conditional logic and an <code class="mono">@arr</code> loop that generates every state from 0–99 in advance.</p>
+            <div class="module-mixins">
+              <span class="pill">@progress-root</span>
+              <span class="pill">@circle-progress</span>
+              <span class="pill">@progress-range</span>
+              <span class="pill">@progress-animate</span>
+              <span class="pill">@event</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-circle">copy</button></div>
+              <pre class="m-circle"><span class="tok-at">@import</span>((*) from circle-progress)
+<span class="tok-at">@progress-root</span>()
+<span class="tok-at">@circle-progress</span>(#progress[class^='p-'])</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/Figsh/Circle-progress.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss-ttr/building-a-smart-circular-progress-with-fscss-javascript-interactive-demo-flg" target="_blank" rel="noopener">Read the write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRutbustvBCQDL7o6RSaOAs19AL1vQapGN6PeT_1EuyQ&s=10" loading="lazy" decoding="async">
+            
+          </div>
+        </article>
+
+        <!-- customizable -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">customizable.fscss</div>
+            <h3>The recurring page shapes, as independent pieces</h3>
+            <p class="desc">Nav, hero, feature grid, CTA banner, footer, 404, and a full long-form typography scale — each its own mixin, imported only when a page actually needs it. One token layer, written by <code class="mono">page-root</code>, drives color and radius across every piece at once.</p>
+            <div class="module-mixins">
+              <span class="pill">@page-root</span>
+              <span class="pill">@page-hero</span>
+              <span class="pill">@page-btn-primary</span>
+              <span class="pill">@page-404</span>
+              <span class="pill">@page-prose</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-customizable">copy</button></div>
+              <pre class="m-customizable"><span class="tok-at">@import</span>((page-root, page-hero, page-btn) from customizable)
+<span class="tok-at">@page-root</span>()
+<span class="tok-at">@page-hero</span>(.page-hero)</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/customizable.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss-ttr/introducing-customizablefscss-a-pure-css-page-styling-system-3gf6" target="_blank" rel="noopener">Read the write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fs7ur5esdxae07sdxsatd.jpg" loading="lazy" decoding="async">
+          </div>
+        </article>
+
+        <!-- cube -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">cube.fscss</div>
+            <h3>Real 3D, six faces, decoupled from content</h3>
+            <p class="desc">Six absolutely-positioned faces on a <code class="mono">preserve-3d</code> parent, pushed out by half the cube's edge and rotated to face outward. Face position and face content are separate concerns — apply any of eight "micro" effects (fire, matrix rain, glass, holo, glitch) to any face independently.</p>
+            <div class="module-mixins">
+              <span class="pill">@cube-wrapper</span>
+              <span class="pill">@cube-face-front</span>
+              <span class="pill">@cube-size</span>
+              <span class="pill">@cube-micro-glass</span>
+              <span class="pill">@cube-micro-dice</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-cube">copy</button></div>
+              <pre class="m-cube"><span class="tok-at">@import</span>((*) from cube)
+<span class="tok-at">@cube-root</span>()
+<span class="tok-at">@cube-wrapper</span>(.my-cube)
+<span class="tok-at">@cube-face-front</span>(.my-cube .f1)</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/cube.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss/pure-css-3d-dice-cube-module-fscss-34gg" target="_blank" rel="noopener">Read the write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F5n5lkc0ypnh2lkwmi3vr.jpg" loading="lazy" decoding="async">
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ COMBINE ============================ -->
+  <section class="section" id="combine">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Combining modules</span>
+        <h2>Building something real, not five separate demos</h2>
+        <p>Every module reads its own tokens and stays out of the others' way, so nothing stops them sharing one page. Here's what a real interface looks like once they're stacked together — a creator dashboard: st-core renders the earnings chart, circle-progress tracks a payout goal, form.fscss handles the withdrawal request, customizable.fscss provides the page shell, and a small cube.fscss badge marks a milestone.</p>
+      </div>
+
+      <div class="combine-panel" data-reveal>
+        <div class="combine-info">
+          <span class="pill live">Real build pattern</span>
+          <ol>
+            <li><b>01</b> <span><code class="mono">customizable.fscss</code> lays down the page shell — nav, container, token layer — so every other module inherits the same spacing and radius scale.</span></li>
+            <li><b>02</b> <span><code class="mono">st-core.fscss</code> renders the earnings-over-time chart and the stat card up top, fed by whatever your backend returns.</span></li>
+            <li><b>03</b> <span><code class="mono">circle-progress.fscss</code> shows progress toward the next payout threshold — one class name, no manual color logic.</span></li>
+            <li><b>04</b> <span><code class="mono">form.fscss</code> handles the "Request withdrawal" form — floating label, validation state, submit button.</span></li>
+            <li><b>05</b> <span><code class="mono">cube.fscss</code> adds a small rotating badge when a creator hits a milestone — a detail, not the centerpiece.</span></li>
+          </ol>
+
+          <div class="code" style="margin-top: 26px;">
+            <div class="code-head">combined import<button class="copy-btn" data-copy=".m-combine">copy</button></div>
+            <pre class="m-combine"><span class="tok-at">@import</span>((page-root, page-base) from customizable)
+<span class="tok-at">@import</span>((*) from st-core)
+<span class="tok-at">@import</span>((*) from circle-progress)
+<span class="tok-at">@import</span>((form-root, form-group, form-input,
+         form-label, form-float, form-btn-primary) from form)
+<span class="tok-at">@import</span>((cube-root, cube-wrapper, cube-face-front,
+         cube-micro-glass) from cube)</pre>
+          </div>
+
+          <div class="module-links" style="margin-top: 4px;">
+            <a class="btn btn-primary btn-sm" href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">Read the full docs</a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/FSCSS/discussions" target="_blank" rel="noopener">Ask in Discussions</a>
+          </div>
+        </div>
+
+        <div class="combine-shot">
+          <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F4u2z8067j9590eajabfm.jpg" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ECOSYSTEM ========================== -->
+  <section class="section" id="ecosystem">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">The Figsh's network</span>
+        <h2>Where FSCSS is actually running in production</h2>
+        <p>FSCSS isn't a demo-only project — it's the styling layer under a working set of live products.</p>
+      </div>
+
+      <div class="pillars">
+        <a class="card pillar" href="https://devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="pillar-num">devtem.org</div>
+          <h3>DevTemple</h3>
+          <p>A digital marketplace where creators sell templates, code snippets, and UI kits — built on the same vanilla HTML/CSS/JS stack FSCSS targets.</p>
+        </a>
+        <a class="card pillar" href="https://fscss.devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="pillar-num">fscss.devtem.org</div>
+          <h3>FSCSS Documentation</h3>
+          <p>The canonical reference for the language itself — installation, variables, <code class="mono">@define</code>, imports, and the full API.</p>
+        </a>
+        <a class="card pillar" href="https://design.devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="pillar-num">design.devtem.org</div>
+          <h3>devtemDesign</h3>
+          <p>A declarative animated page engine, styled with the same design-token approach the FSCSS modules use.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SPONSORS ============================ -->
+  <section class="section" id="sponsors">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Sponsors &amp; supporters</span>
+        <h2>Who keeps FSCSS moving</h2>
+        <p>FSCSS is maintained in the open, alongside the products that depend on it.</p>
+      </div>
+
+      <div class="sponsor-grid">
+        <a class="card sponsor-card" href="https://devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="mark"><img src="https://devtem.org/assets/images/logo.png" alt="DevTemple" loading="lazy"></div>
+          <h4>DevTemple</h4>
+          <p>Marketplace &amp; primary adopter</p>
+        </a>
+        <a class="card sponsor-card" href="https://invites.devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="mark"><img src="https://invites.devtem.org/assets/img/logo.png" alt="D invites" loading="lazy"></div>
+          <h4>D Invites</h4>
+          <p>Event pages built on FSCSS</p>
+        </a>
+        <a class="card sponsor-card" href="https://design.devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="mark"><img src="https://fscss.devtem.org/assets/images/fscss.png" loading="lazy" alt="DevtemDesign"></div>
+          <h4>devtemDesign</h4>
+          <p>Animated page engine</p>
+        </a>
+      </div>
+
+      <p class="sponsor-cta">Want your project listed here? <a href="https://github.com/sponsors/Figsh" target="_blank" rel="noopener" style="color:var(--accent-2); text-decoration: underline;">Sponsor FSCSS on GitHub</a> — first sponsor gets the top spot.</p>
+    </div>
+  </section>
+
+  <!-- ============================ RESOURCES ============================ -->
+  <section class="section" id="resources">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Keep learning</span>
+        <h2>Docs, write-ups, and where the community lives</h2>
+      </div>
+
+      <div class="resource-grid">
+        <div class="card article-list" data-reveal>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss/creating-modern-forms-with-formfscss-pure-css-4801" target="_blank" rel="noopener">Creating modern forms with form.fscss — pure CSS</a>
+            <span class="tag">dev.to/fscss</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss/pure-css-3d-dice-cube-module-fscss-34gg" target="_blank" rel="noopener">Pure CSS 3D dice cube module: FSCSS</a>
+            <span class="tag">dev.to/fscss</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss/i-built-a-live-trading-dashboard-with-zero-chartjs-just-css-custom-properties-26c0" target="_blank" rel="noopener">A live trading dashboard — zero Chart.js, just CSS custom properties</a>
+            <span class="tag">dev.to/fscss</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss-ttr/introducing-customizablefscss-a-pure-css-page-styling-system-3gf6" target="_blank" rel="noopener">Introducing customizable.fscss — a pure CSS page-styling system</a>
+            <span class="tag">dev.to/fscss-ttr</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss-ttr/how-st-corefscss-understands-your-data-without-a-single-line-of-javascript-349k" target="_blank" rel="noopener">How st-core.fscss "understands" your data without a line of JS</a>
+            <span class="tag">dev.to/fscss-ttr</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss-ttr/building-a-smart-circular-progress-with-fscss-javascript-interactive-demo-flg" target="_blank" rel="noopener">Building a smart circular progress with FSCSS + JavaScript</a>
+            <span class="tag">dev.to/fscss-ttr</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/figsh/i-made-a-decision-cube-you-rotate-by-scrolling-pure-css-one-js-listener-3end" target="_blank" rel="noopener">A decision cube you rotate by scrolling — one JS listener</a>
+            <span class="tag">dev.to/figsh</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/figsh/creating-custom-functions-in-fscss-yes-css-can-do-this-4f6g" target="_blank" rel="noopener">Creating custom functions in FSCSS — yes, CSS can do this</a>
+            <span class="tag">dev.to/figsh</span>
+          </div>
+        </div>
+
+        <div class="resource-side" data-reveal>
+          <a class="card link-card" href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">
+            <div><div class="l-name">Documentation</div><div class="l-desc">fscss.devtem.org/docs</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS" target="_blank" rel="noopener">
+            <div><div class="l-name">Core repo</div><div class="l-desc">github.com/fscss-ttr/FSCSS</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://www.npmjs.com/package/fscss" target="_blank" rel="noopener">
+            <div><div class="l-name">npm package</div><div class="l-desc">npmjs.com/package/fscss</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://www.jsdelivr.com/package/npm/fscss" target="_blank" rel="noopener">
+            <div><div class="l-name">jsDelivr CDN</div><div class="l-desc">cdn.jsdelivr.net/npm/fscss</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS/discussions" target="_blank" rel="noopener">
+            <div><div class="l-name">Discussions</div><div class="l-desc">ask questions, share builds</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">
+            <div><div class="l-name">Contributing guide</div><div class="l-desc">report bugs, add a module</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FINAL CTA ============================ -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="final-cta" data-reveal>
+        <h2>Install it, import a module, build something real</h2>
+        <p>Start with the CDN runtime for prototyping, then compile to plain CSS when you're ready to ship.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://www.npmjs.com/package/fscss" target="_blank" rel="noopener">Install via npm</a>
+          <a class="btn btn-ghost" href="https://fscss.devtem.org/libraries">Browse the modules</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS"> FSCSS Hub</a>
+        <p>A learning and build hub for FSCSS and its module ecosystem — part of the Figsh's network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#syntax">Syntax primer</a></li>
+          <li><a href="#modules">Modules</a></li>
+          <li><a href="#combine">Combining modules</a></li>
+          <li><a href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">Full documentation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://devtem.org" target="_blank" rel="noopener">DevTemple</a></li>
+          <li><a href="https://fscss.devtem.org" target="_blank" rel="noopener">FSCSS Docs</a></li>
+          <li><a href="https://design.devtem.org" target="_blank" rel="noopener">devtemDesign</a></li>
+          <li><a href="https://invites.devtem.org" target="_blank" rel="noopener">D Invites</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub org</a></li>
+          <li><a href="https://dev.to/fscss" target="_blank" rel="noopener">dev.to/fscss</a></li>
+          <li><a href="https://dev.to/fscss-ttr" target="_blank" rel="noopener">dev.to/fscss-ttr</a></li>
+          <li><a href="https://dev.to/figsh" target="_blank" rel="noopener">dev.to/figsh</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 FSCSS Hub. Part of the Figsh's network. MIT licensed modules.</p>
+      <div class="footer-social">
+        <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.4 7.86 10.94.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55A10.5 10.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg></a>
+        <a href="https://dev.to/fscss" target="_blank" rel="noopener" aria-label="dev.to"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm3.4 5.1c-.3-.2-.7-.3-1.2-.3H4.7v8.4h1.6c.5 0 .9-.1 1.2-.3.9-.5 1.4-1.6 1.4-3.9 0-2.3-.5-3.4-1.4-3.9zm-.4 6.5c-.1.1-.4.2-.7.2h-.2v-5.4h.2c.3 0 .6.1.7.2.4.3.6 1.1.6 2.5 0 1.4-.2 2.2-.6 2.5zm5.6-6.8H9.9v8.4h2.7v-1.6h-1.3v-1.7h1.1v-1.5h-1.1v-1.9h1.3zm5.9 0h-1.6l-1 4.6-1-4.6h-1.7l2 8.4h1.4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/global.js"></script>
+<script>
+  // Hero demo tab switcher (page-specific, small enough to keep inline)
+  (function () {
+    var tabs = document.querySelectorAll('.demo-tabs button');
+    var panes = document.querySelectorAll('.demo-pane');
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        tabs.forEach(function (b) { b.classList.remove('is-active'); });
+        panes.forEach(function (p) { p.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        document.querySelector('[data-pane="' + btn.getAttribute('data-tab') + '"]').classList.add('is-active');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
+
