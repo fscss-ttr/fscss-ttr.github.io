@@ -2,4 +2,4 @@
 User-agent: *
 Disallow: /private/
 Allow: /
-Sitemap: https://invites.devtem.org/sitemap.xml
+Sitemap: https://hub.devtem.org/sitemap.xml
