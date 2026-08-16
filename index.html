@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem</title>
   <meta name="description" content="A hands-on hub for learning FSCSS and its modules — st-core, form, circle-progress, customizable, and cube — and combining them into real interfaces.">
-  
+
   <!-- SEO / Canonical -->
   <link rel="canonical" href="https://hub.devtem.org/">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://hub.devtem.org/sitemap.xml">
   <meta name="robots" content="index, follow">
-  
+
   <!-- Open Graph (social sharing) -->
   <meta property="og:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
   <meta property="og:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
@@ -20,19 +20,19 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="FSCSS Hub">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
   <meta name="twitter:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
   <meta name="twitter:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
-  
-  <!-- Favicon & fonts (keep existing) -->
+
+  <!-- Favicon & fonts -->
   <link rel="icon" href="https://fscss.devtem.org/assets/images/fscss.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="assets/css/global.css">
 <style>
   /* ---- Page-specific styles for index.html ---------------------------- */
@@ -40,7 +40,7 @@
   /* Hero */
   .hero{ position: relative; padding: clamp(56px,9vw,96px) 0 clamp(40px,6vw,64px); overflow: hidden; }
   .hero::before{
-    content:''; position: absolute; top: -220px; left: 50%; width: 900px; height: 620px; transform: translateX(-50%);
+    content:''; position: absolute; top: -220px; left: 50%; width: min(900px, 120vw); max-width: 100vw; height: 620px; transform: translateX(-50%);
     background: radial-gradient(closest-side, rgba(143,107,255,.28), transparent 70%); pointer-events: none;
   }
   .hero-grid{ display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; position: relative; }
@@ -88,9 +88,7 @@
   .pillar p{ color: var(--text-dim); font-size: 14.5px; }
 
   /* syntax primer */
-  .primer-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; 
-    max-width: 100%;
-  }
+  .primer-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 100%; }
   .primer-card h4{ font-family: var(--font-display); font-size: 15.5px; margin-bottom: 4px; }
   .primer-card p.desc{ color: var(--muted); font-size: 13px; margin-bottom: 14px; }
   .primer-card .code pre{ padding: 14px 16px; font-size: 12.3px; }
@@ -102,8 +100,8 @@
     background: var(--card); overflow: hidden;
   }
   .module-info{ padding: clamp(24px,3vw,36px); display: flex; flex-direction: column; }
-  .module-shot{ padding: clamp(24px,3vw,36px); background: var(--surface); display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--border); }
-  .module-shot .shot-placeholder{ width: 100%; height: 100%; min-height: 200px; }
+  .module-shot{ background: var(--surface); display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--border); overflow: hidden; }
+  .module-shot img{ width: 100%; height: 100%; object-fit: cover; display: block; }
   .module-name{ font-family: var(--font-mono); font-size: 13px; color: var(--accent-2); margin-bottom: 10px; }
   .module h3{ font-family: var(--font-display); font-size: 24px; margin-bottom: 10px; }
   .module p.desc{ color: var(--text-dim); font-size: 14.5px; margin-bottom: 18px; }
@@ -113,7 +111,7 @@
   .module-links{ display: flex; gap: 10px; margin-top: auto; flex-wrap: wrap; }
   @media (max-width: 860px){
     .module{ grid-template-columns: 1fr; }
-    .module-shot{ border-left: 0; border-top: 1px solid var(--border); order: -1; }
+    .module-shot{ border-left: 0; border-top: 1px solid var(--border); order: -1; min-height: 200px; }
   }
 
   /* combine section */
@@ -122,17 +120,18 @@
   .combine-info ol{ margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
   .combine-info li{ display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; color: var(--text-dim); }
   .combine-info li b{ font-family: var(--font-mono); color: var(--accent-2); flex: none; width: 22px; }
-  .combine-shot{ border-left: 1px solid var(--border); padding: clamp(28px,4vw,44px); background: var(--surface); }
-  .combine-shot .shot-placeholder{ height: 100%; min-height: 320px; }
+  .combine-shot{ border-left: 1px solid var(--border); background: var(--surface); overflow: hidden; }
+  .combine-shot img{ width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (max-width: 860px){
     .combine-panel{ grid-template-columns: 1fr; }
-    .combine-shot{ border-left: 0; border-top: 1px solid var(--border); }
+    .combine-shot{ border-left: 0; border-top: 1px solid var(--border); min-height: 220px; }
   }
 
   /* sponsors */
   .sponsor-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .sponsor-card{ text-align: center; padding: 32px 22px; }
-  .sponsor-card .mark{ width: 46px; height: 46px; border-radius: 12px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; color: #100e1c; font-size: 18px; }
+  .sponsor-card .mark{ width: 46px; height: 46px; border-radius: 12px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .sponsor-card .mark img{ width: 100%; height: 100%; object-fit: cover; }
   .sponsor-card h4{ font-family: var(--font-display); font-size: 16px; margin-bottom: 6px; }
   .sponsor-card p{ font-size: 13px; color: var(--muted); }
   .sponsor-cta{ text-align: center; margin-top: 26px; color: var(--text-dim); font-size: 14.5px; }
@@ -180,6 +179,7 @@
       <a href="#syntax">Syntax</a>
       <a href="#modules">Modules</a>
       <a href="#combine">Build</a>
+      <a href="tutorial">Tutorial</a>
       <a href="#ecosystem">Ecosystem</a>
       <a href="#resources">Resources</a>
     </nav>
@@ -206,7 +206,7 @@
         <p class="lead">A hands-on home for the FSCSS ecosystem — the language itself, plus the modules built on top of it: charts, forms, progress rings, page shells, and 3D. Learn the syntax, then combine the modules into things that actually ship.</p>
 
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#combine">See it combined</a>
+          <a class="btn btn-primary" href="tutorial">Follow the full tutorial</a>
           <a class="btn btn-ghost" href="#modules">Browse modules</a>
         </div>
 
@@ -308,7 +308,7 @@
       <div class="section-head" data-reveal>
         <span class="eyebrow">Syntax primer</span>
         <h2>Enough FSCSS to read every example on this page</h2>
-        <p>Six pieces of syntax cover almost everything the modules below use. The full reference lives in the docs.</p>
+        <p>Six pieces of syntax cover almost everything the modules below use. Want the long version, with a full project built step by step? See the <a href="tutorial.html" style="color:var(--accent-2); text-decoration: underline;">full tutorial</a>.</p>
       </div>
 
       <div class="primer-grid">
@@ -402,7 +402,7 @@
             </div>
           </div>
           <div class="module-shot">
-<img src="https://media2.dev.to/dynamic/image/width=1280,height=720,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F40jmbtsgup65yztwydt6.jpg" loading="lazy" decoding="async">
+            <img src="https://media2.dev.to/dynamic/image/width=1280,height=720,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F40jmbtsgup65yztwydt6.jpg" alt="st-core.fscss dashboard example" loading="lazy" decoding="async">
           </div>
         </article>
 
@@ -433,7 +433,7 @@
             </div>
           </div>
           <div class="module-shot">
-            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fepkahanv1aoudyfujlz5.jpg" loading="lazy" decoding="async">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fepkahanv1aoudyfujlz5.jpg" alt="form.fscss sign-up card example" loading="lazy" decoding="async">
           </div>
         </article>
 
@@ -462,8 +462,7 @@
             </div>
           </div>
           <div class="module-shot">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRutbustvBCQDL7o6RSaOAs19AL1vQapGN6PeT_1EuyQ&s=10" loading="lazy" decoding="async">
-            
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRutbustvBCQDL7o6RSaOAs19AL1vQapGN6PeT_1EuyQ&s=10" alt="circle-progress.fscss ring states" loading="lazy" decoding="async">
           </div>
         </article>
 
@@ -492,7 +491,7 @@
             </div>
           </div>
           <div class="module-shot">
-            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fs7ur5esdxae07sdxsatd.jpg" loading="lazy" decoding="async">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fs7ur5esdxae07sdxsatd.jpg" alt="customizable.fscss page shell example" loading="lazy" decoding="async">
           </div>
         </article>
 
@@ -522,7 +521,7 @@
             </div>
           </div>
           <div class="module-shot">
-            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F5n5lkc0ypnh2lkwmi3vr.jpg" loading="lazy" decoding="async">
+            <img src="https://media2.dev.to/dynamic/image/width=1200,height=627,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fbp193w8ubehu8lqttez9.jpg" alt="cube.fscss rotating dice example" loading="lazy" decoding="async">
           </div>
         </article>
 
@@ -536,7 +535,7 @@
       <div class="section-head" data-reveal>
         <span class="eyebrow">Combining modules</span>
         <h2>Building something real, not five separate demos</h2>
-        <p>Every module reads its own tokens and stays out of the others' way, so nothing stops them sharing one page. Here's what a real interface looks like once they're stacked together — a creator dashboard: st-core renders the earnings chart, circle-progress tracks a payout goal, form.fscss handles the withdrawal request, customizable.fscss provides the page shell, and a small cube.fscss badge marks a milestone.</p>
+        <p>Every module reads its own tokens and stays out of the others' way, so nothing stops them sharing one page. Here's what a real interface looks like once they're stacked together — a creator dashboard: st-core renders the earnings chart, circle-progress tracks a payout goal, form.fscss handles the withdrawal request, customizable.fscss provides the page shell, and a small cube.fscss badge marks a milestone. The full walkthrough, file by file, is in the <a href="tutorial.html" style="color:var(--accent-2); text-decoration: underline;">tutorial</a>.</p>
       </div>
 
       <div class="combine-panel" data-reveal>
@@ -562,13 +561,13 @@
           </div>
 
           <div class="module-links" style="margin-top: 4px;">
-            <a class="btn btn-primary btn-sm" href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">Read the full docs</a>
+            <a class="btn btn-primary btn-sm" href="tutorial">Follow the full tutorial</a>
             <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/FSCSS/discussions" target="_blank" rel="noopener">Ask in Discussions</a>
           </div>
         </div>
 
         <div class="combine-shot">
-          <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F4u2z8067j9590eajabfm.jpg" loading="lazy" decoding="async">
+          <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F4u2z8067j9590eajabfm.jpg" alt="Combined dashboard build example" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -578,7 +577,7 @@
   <section class="section" id="ecosystem">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <span class="eyebrow">The Figsh's network</span>
+        <span class="eyebrow">The Figsh network</span>
         <h2>Where FSCSS is actually running in production</h2>
         <p>FSCSS isn't a demo-only project — it's the styling layer under a working set of live products.</p>
       </div>
@@ -645,6 +644,10 @@
       <div class="resource-grid">
         <div class="card article-list" data-reveal>
           <div class="article-row">
+            <a class="title" href="tutorial.html">Full tutorial — building a complete site with FSCSS modules</a>
+            <span class="tag">hub</span>
+          </div>
+          <div class="article-row">
             <a class="title" href="https://dev.to/fscss/creating-modern-forms-with-formfscss-pure-css-4801" target="_blank" rel="noopener">Creating modern forms with form.fscss — pure CSS</a>
             <span class="tag">dev.to/fscss</span>
           </div>
@@ -679,7 +682,11 @@
         </div>
 
         <div class="resource-side" data-reveal>
-          <a class="card link-card" href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">
+          <a class="card link-card" href="tutorial.html">
+            <div><div class="l-name">Full tutorial</div><div class="l-desc">build a complete site, step by step</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">
             <div><div class="l-name">Documentation</div><div class="l-desc">fscss.devtem.org/docs</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
@@ -699,10 +706,6 @@
             <div><div class="l-name">Discussions</div><div class="l-desc">ask questions, share builds</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
-          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">
-            <div><div class="l-name">Contributing guide</div><div class="l-desc">report bugs, add a module</div></div>
-            <span class="mono muted">&rarr;</span>
-          </a>
         </div>
       </div>
     </div>
@@ -715,7 +718,7 @@
         <h2>Install it, import a module, build something real</h2>
         <p>Start with the CDN runtime for prototyping, then compile to plain CSS when you're ready to ship.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="https://www.npmjs.com/package/fscss" target="_blank" rel="noopener">Install via npm</a>
+          <a class="btn btn-primary" href="tutorial.html">Follow the full tutorial</a>
           <a class="btn btn-ghost" href="https://fscss.devtem.org/libraries">Browse the modules</a>
         </div>
       </div>
@@ -729,15 +732,15 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="brand"><img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS"> FSCSS Hub</a>
-        <p>A learning and build hub for FSCSS and its module ecosystem — part of the Figsh's network.</p>
+        <p>A learning and build hub for FSCSS and its module ecosystem — part of the Figsh network.</p>
       </div>
       <div class="footer-col">
         <h4>Learn</h4>
         <ul>
           <li><a href="#syntax">Syntax primer</a></li>
           <li><a href="#modules">Modules</a></li>
-          <li><a href="#combine">Combining modules</a></li>
-          <li><a href="https://fscss.devtem.org/docs.html" target="_blank" rel="noopener">Full documentation</a></li>
+          <li><a href="tutorial">Full tutorial</a></li>
+          <li><a href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">Full documentation</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -761,7 +764,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 FSCSS Hub. Part of the Figsh's network. MIT licensed modules.</p>
+      <p>&copy; 2026 FSCSS Hub. Part of the Figsh network. MIT licensed modules.</p>
       <div class="footer-social">
         <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.4 7.86 10.94.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55A10.5 10.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg></a>
         <a href="https://dev.to/fscss" target="_blank" rel="noopener" aria-label="dev.to"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm3.4 5.1c-.3-.2-.7-.3-1.2-.3H4.7v8.4h1.6c.5 0 .9-.1 1.2-.3.9-.5 1.4-1.6 1.4-3.9 0-2.3-.5-3.4-1.4-3.9zm-.4 6.5c-.1.1-.4.2-.7.2h-.2v-5.4h.2c.3 0 .6.1.7.2.4.3.6 1.1.6 2.5 0 1.4-.2 2.2-.6 2.5zm5.6-6.8H9.9v8.4h2.7v-1.6h-1.3v-1.7h1.1v-1.5h-1.1v-1.9h1.3zm5.9 0h-1.6l-1 4.6-1-4.6h-1.7l2 8.4h1.4z"/></svg></a>
