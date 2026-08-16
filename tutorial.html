@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a full site with FSCSS modules — Full Tutorial | FSCSS Hub</title>
+<meta name="description" content="A complete, step-by-step tutorial: build a real multi-section site by combining st-core, form, circle-progress, customizable, and cube — with exact imports, structure, and capability notes for each module.">
+<link rel="canonical" href="https://hub.devtem.org/tutorial">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Building a full site with FSCSS modules — Full Tutorial">
+<meta property="og:description" content="Step-by-step: combine st-core, form, circle-progress, customizable, and cube into one real site. Exact imports, structure, and capability notes.">
+<meta property="og:url" content="https://hub.devtem.org/tutorial">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
+<meta property="og:site_name" content="FSCSS Hub">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="https://fscss.devtem.org/assets/images/fscss.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/global.css">
+<style>
+  /* ---- Page-specific styles for tutorial.html -------------------------- */
+
+  .t-hero{ padding: clamp(44px,7vw,72px) 0 clamp(32px,5vw,48px); border-bottom: 1px solid var(--border); }
+  .t-hero h1{ font-family: var(--font-display); font-size: clamp(30px,4.4vw,48px); font-weight: 700; letter-spacing: -.015em; max-width: 780px; }
+  .t-hero p.lead{ margin-top: 16px; color: var(--text-dim); font-size: 16.5px; max-width: 640px; }
+  .t-meta{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+  /* two-column layout: sticky TOC + content */
+  .t-layout{ display: grid; grid-template-columns: 240px 1fr; gap: 48px; padding: clamp(40px,6vw,64px) 0 100px; align-items: start; }
+  .t-toc{ position: sticky; top: 88px; }
+  .t-toc-label{ font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 12px; }
+  .t-toc ol{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; border-left: 1px solid var(--border); }
+  .t-toc a{
+    display: block; padding: 7px 0 7px 16px; font-size: 13.5px; color: var(--muted); border-left: 2px solid transparent; margin-left: -1px;
+    transition: color .18s var(--ease), border-color .18s var(--ease);
+  }
+  .t-toc a:hover{ color: var(--text-dim); }
+  .t-toc a.is-active{ color: var(--accent-2); border-left-color: var(--accent); }
+  @media (max-width: 980px){
+    .t-layout{ grid-template-columns: 1fr; }
+    .t-toc{ position: static; order: -1; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; background: var(--surface); }
+    .t-toc ol{ border-left: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
+    .t-toc a{ border-left: 0; padding: 5px 0; }
+  }
+
+  .t-content{ min-width: 0; }
+  .t-step{ padding-top: 8px; margin-bottom: 64px; scroll-margin-top: 90px; }
+  .t-step-tag{ font-family: var(--font-mono); font-size: 12px; color: var(--accent-2); margin-bottom: 8px; }
+  .t-step h2{ font-family: var(--font-display); font-size: clamp(24px,3vw,32px); font-weight: 600; letter-spacing: -.01em; margin-bottom: 14px; }
+  .t-step h3{ font-family: var(--font-display); font-size: 17px; margin: 26px 0 10px; }
+  .t-step p{ color: var(--text-dim); font-size: 15px; margin-bottom: 14px; max-width: 700px; }
+  .t-step p code, .t-step li code{ font-family: var(--font-mono); font-size: 13px; color: var(--accent-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
+  .t-step ul.plain, .t-step ol.plain{ margin: 0 0 16px; padding-left: 20px; color: var(--text-dim); font-size: 14.5px; }
+  .t-step ul.plain li, .t-step ol.plain li{ margin-bottom: 6px; }
+  .t-step .code{ margin: 16px 0 20px; }
+
+  .capgrid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0 22px; }
+  .capgrid .cap-card{ padding: 16px 18px; }
+  .cap-card .cap-label{ font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+  .cap-card .cap-value{ font-size: 14px; font-weight: 600; }
+  @media (max-width: 700px){ .capgrid{ grid-template-columns: 1fr; } }
+
+  .file-tree{ font-family: var(--font-mono); font-size: 13px; line-height: 1.9; background: #0d0b18; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px 24px; color: var(--text-dim); overflow-x: auto; }
+  .file-tree .dir{ color: var(--accent-2); }
+  .file-tree .fscss-file{ color: var(--mint); }
+  .file-tree .note{ color: var(--muted); font-style: italic; }
+
+  figure.t-shot{ margin: 18px 0 22px; }
+  figure.t-shot .shot img{ width: 100%; }
+
+  .divider{ border: 0; border-top: 1px solid var(--border); margin: 8px 0 56px; }
+
+  .note-box{ display: flex; gap: 12px; padding: 16px 18px; border-radius: var(--radius-md); background: var(--accent-soft); border: 1px solid var(--border-strong); margin: 18px 0 22px; }
+  .note-box .dot{ width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); flex: none; margin-top: 7px; }
+  .note-box p{ margin: 0; color: var(--text-dim); font-size: 14px; }
+
+  .next-nav{ display: flex; justify-content: space-between; gap: 16px; margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a href="/" class="brand">
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.1.24</span>
+    </a>
+    <nav class="nav-links" data-nav-links>
+      <a href="/#syntax">Syntax</a>
+      <a href="/#modules">Modules</a>
+      <a href="/#combine">Build</a>
+      <a href="tutorial" class="is-active">Tutorial</a>
+      <a href="/#ecosystem">Ecosystem</a>
+      <a href="/#resources">Resources</a>
+    </nav>
+    <div class="nav-actions">
+      <label class="theme-toggle" title="Toggle light / dark">
+        <input type="checkbox" data-theme-toggle aria-label="Toggle light theme">
+        <span class="knob"></span>
+      </label>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub</a>
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="t-hero">
+    <div class="wrap">
+      <span class="eyebrow">Full tutorial</span>
+      <h1>Building a full site with FSCSS modules</h1>
+      <p class="lead">One project, five modules, every import explained. This walks through building a real multi-section site — marketing page, dashboard, and a settings panel — by combining <code class="mono">customizable</code>, <code class="mono">st-core</code>, <code class="mono">circle-progress</code>, <code class="mono">form</code>, and <code class="mono">cube</code>. Each step covers exactly what you import, what it builds in the DOM, what it's good for, and what version of FSCSS it needs.</p>
+      <div class="t-meta">
+        <span class="pill">~25 min read</span>
+        <span class="pill">FSCSS v1.1.24+</span>
+        <span class="pill">5 modules</span>
+        <span class="pill live">No build tools required</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap t-layout">
+
+    <aside class="t-toc" data-toc>
+      <div class="t-toc-label">On this page</div>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#structure">Project structure</a></li>
+        <li><a href="#imports">The import system</a></li>
+        <li><a href="#step-shell">1. Page shell</a></li>
+        <li><a href="#step-charts">2. Dashboard charts</a></li>
+        <li><a href="#step-progress">3. Payout goal ring</a></li>
+        <li><a href="#step-forms">4. Withdrawal form</a></li>
+        <li><a href="#step-cube">5. Milestone badge</a></li>
+        <li><a href="#full-file">Full assembled page</a></li>
+        <li><a href="#shipping">Shipping to production</a></li>
+        <li><a href="#reference">Capability &amp; version reference</a></li>
+      </ol>
+    </aside>
+
+    <div class="t-content">
+
+      <!-- OVERVIEW -->
+      <section class="t-step" id="overview">
+        <div class="t-step-tag">00 · What you're building</div>
+        <h2>A creator dashboard, not five isolated demos</h2>
+        <p>The example running through this tutorial is a small internal tool for DevTemple-style creators: a page that shows earnings over time, tracks progress toward a payout threshold, lets a creator request a withdrawal, and shows a small 3D badge when they hit a milestone. It's deliberately ordinary — the point isn't the dashboard, it's that five separately-maintained CSS modules sit on one page without fighting each other.</p>
+        <p>Every module in this ecosystem follows the same rule: it reads design tokens from its own <code>@*-root</code> mixin, renders its shapes with plain CSS (<code>clip-path</code>, gradients, transforms, pseudo-elements), and — where JavaScript shows up at all — only ever writes a CSS custom property. That rule is what makes combining them straightforward instead of a specificity fight.</p>
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Every code block below is copy-paste real — pulled from each module's actual mixin names and import syntax. The screenshots are reference images from each module's own write-up.</p>
+        </div>
+      </section>
+
+      <!-- SETUP -->
+      <section class="t-step" id="setup">
+        <div class="t-step-tag">01 · Setup</div>
+        <h2>Two ways to bring FSCSS in</h2>
+        <p>Pick one depending on where you are in the build. Both compile the same shorthand to the same output — the only difference is when compilation happens.</p>
+
+        <h3>Option A — CDN runtime (fastest to start)</h3>
+        <p>Good for prototyping, demos, and this tutorial. The runtime script compiles any <code>@fscss</code>-flavored <code>&lt;style&gt;</code> block in the browser as the page loads.</p>
+        <div class="code">
+          <div class="code-head">html<button class="copy-btn" data-copy=".s-cdn">copy</button></div>
+          <pre class="s-cdn"><span class="tok-tag">&lt;script</span> src=<span class="tok-str">"https://cdn.jsdelivr.net/npm/fscss@1.1.24/exec.min.js"</span> defer<span class="tok-tag">&gt;&lt;/script&gt;</span></pre>
+        </div>
+
+        <h3>Option B — CLI, compiled ahead of time (production)</h3>
+        <p>No runtime request, no in-browser compile step. This is what you switch to once the site is ready to ship.</p>
+        <div class="code">
+          <div class="code-head">bash<button class="copy-btn" data-copy=".s-cli">copy</button></div>
+          <pre class="s-cli"><span class="tok-com"># once, globally</span>
+npm install -g fscss
+
+<span class="tok-com"># compile a source file to plain CSS</span>
+fscss site.fscss dist/site.css</pre>
+        </div>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Runtime weight</div><div class="cap-value">~10kb (CDN mode)</div></div>
+          <div class="card cap-card"><div class="cap-label">Compiled weight</div><div class="cap-value">~0.5kb / module</div></div>
+          <div class="card cap-card"><div class="cap-label">Minimum FSCSS</div><div class="cap-value">v1.1.24+</div></div>
+        </div>
+      </section>
+
+      <!-- STRUCTURE -->
+      <section class="t-step" id="structure">
+        <div class="t-step-tag">02 · Project structure</div>
+        <h2>How a real FSCSS site is laid out</h2>
+        <p>There's no bundler and no framework, so the structure stays close to the output. One source <code>.fscss</code> file per page (or one shared file plus page-specific ones), compiled into a matching <code>.css</code> file that ships to the browser.</p>
+        <pre class="file-tree">
+<span class="dir">creator-studio/</span>
+├── index.html                <span class="note">← marketing / landing page</span>
+├── dashboard.html             <span class="note">← the combined build in this tutorial</span>
+├── package.json
+├── <span class="dir">src/</span>
+│   ├── <span class="fscss-file">shell.fscss</span>            <span class="note">← customizable: nav, container, tokens</span>
+│   ├── <span class="fscss-file">dashboard.fscss</span>        <span class="note">← st-core + circle-progress + form + cube</span>
+│   └── <span class="fscss-file">tokens.fscss</span>           <span class="note">← shared $variables, brand overrides</span>
+├── <span class="dir">dist/</span>
+│   ├── shell.css              <span class="note">← compiled output, committed or built in CI</span>
+│   └── dashboard.css
+└── <span class="dir">assets/</span>
+    └── <span class="dir">images/</span>
+        </pre>
+        <p>Two working patterns, both fine:</p>
+        <ul class="plain">
+          <li><strong>Split by concern</strong> (shown above) — one <code>.fscss</code> file per structural layer, each compiled to its own <code>.css</code>. Easiest to reason about when different modules change at different rates.</li>
+          <li><strong>One file per page</strong> — a single <code>page.fscss</code> that imports everything that page needs and compiles to one <code>page.css</code>. Simplest for smaller sites like this hub.</li>
+        </ul>
+      </section>
+
+      <!-- IMPORTS -->
+      <section class="t-step" id="imports">
+        <div class="t-step-tag">03 · The import system</div>
+        <h2>What <code>@import</code> actually does here</h2>
+        <p>FSCSS imports are selection-based, not file-based — you name which mixins you want out of a module, and only those get compiled into your output. This is the mechanism that keeps the ~0.5kb-per-module compiled weight honest: an unused mixin never ships.</p>
+
+        <h3>Selective import — name exactly what you use</h3>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((page-hero, page-btn, page-btn-primary) from customizable)</pre>
+        </div>
+        <p>Only <code>page-hero</code>, <code>page-btn</code>, and <code>page-btn-primary</code> compile. The module's footer, 404, and feature-grid mixins never enter your CSS, even though they live in the same source file.</p>
+
+        <h3>Wildcard import — pull in everything</h3>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((*) from st-core)</pre>
+        </div>
+        <p>Use this while you're still deciding which pieces of a module you need — during the first pass of a build, or for a module like <code>st-core</code> where a dashboard typically ends up using most of it anyway.</p>
+
+        <h3>Multiple imports, one file</h3>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((*) from st-core)
+<span class="tok-at">@import</span>((*) from circle-progress)
+<span class="tok-at">@import</span>((form-root, form-group, form-float) from form)</pre>
+        </div>
+        <p>Imports stack. Order rarely matters between different modules since each one's mixins are namespaced to its own prefix (<code>@st-*</code>, <code>@form-*</code>, <code>@page-*</code>, <code>@cube-*</code>, <code>@progress-*</code>) — no collisions between modules that were built independently.</p>
+
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Rule of thumb used throughout this tutorial: wildcard-import a module the first time you reach for it, then go back and narrow to a selective import once the page is stable and you know exactly which mixins survived.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- STEP 1 — SHELL -->
+      <section class="t-step" id="step-shell">
+        <div class="t-step-tag">Step 1 of 5 — customizable.fscss</div>
+        <h2>Lay down the page shell</h2>
+        <p>Every other module in this build inherits its spacing, radius, and color from whatever <code>page-root</code> writes to <code>:root</code>. Setting the shell first means the dashboard, the form, and the badge all line up without individually-tuned margins.</p>
+
+        <h3>What it imports</h3>
+        <div class="code">
+          <div class="code-head">dashboard.fscss<button class="copy-btn" data-copy=".s1-import">copy</button></div>
+          <pre class="s1-import"><span class="tok-at">@import</span>((page-root, page-base, page-hero,
+         page-btn, page-btn-primary) from customizable)
+
+<span class="tok-at">@page-root</span>()
+<span class="tok-at">@page-base</span>(body)</pre>
+        </div>
+
+        <h3>What that structurally sets up</h3>
+        <ul class="plain">
+          <li><code>page-root</code> writes the token layer — <code>--page-accent</code>, <code>--page-radius</code>, spacing scale — once, to <code>:root</code>. Every downstream module's own tokens can reference or be overridden alongside these.</li>
+          <li><code>page-base</code> applies base typography and background to whatever selector you pass it — normally <code>body</code>.</li>
+          <li><code>page-hero</code> and the button mixins are pulled in for the marketing landing page (<code>index.html</code>) that sits in front of the dashboard — not strictly required on the dashboard page itself, but sharing one <code>shell.fscss</code> keeps both pages visually identical.</li>
+        </ul>
+
+        <h3>What it's good for</h3>
+        <p>Any page that needs consistent nav, spacing, and a button system without redefining them per page — landing pages, 404s, long-form content, and as the outer shell for pages that also use other modules, like this dashboard.</p>
+
+        <h3>Overriding the brand</h3>
+        <div class="code">
+          <pre><span class="tok-at">@page-root</span>()
+
+:root {
+  --page-accent: <span class="tok-str">#8f6bff</span>;
+  --page-radius: <span class="tok-num">14px</span>;
+}</pre>
+        </div>
+        <p>Two lines here change the accent and radius everywhere <code>customizable</code>'s mixins are used on the page.</p>
+
+        <figure class="t-shot">
+          <div class="shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fs7ur5esdxae07sdxsatd.jpg" alt="customizable.fscss page shell reference" loading="lazy" decoding="async">
+            <div class="shot-cap">Reference — customizable.fscss page shell, from its dev.to write-up.</div>
+          </div>
+        </figure>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Requires</div><div class="cap-value">FSCSS v1.1.24+</div></div>
+          <div class="card cap-card"><div class="cap-label">Breakpoint</div><div class="cap-value">640px, built-in</div></div>
+          <div class="card cap-card"><div class="cap-label">Source</div><div class="cap-value">fscss-ttr/customizable.fscss</div></div>
+        </div>
+      </section>
+
+      <!-- STEP 2 — CHARTS -->
+      <section class="t-step" id="step-charts">
+        <div class="t-step-tag">Step 2 of 5 — st-core.fscss</div>
+        <h2>Render the earnings chart and stat card</h2>
+        <p>The chart's data lives entirely in CSS custom properties (<code>--st-p1</code> through <code>--st-p8</code>), and its shape is a <code>clip-path: polygon()</code> that reads them. Whatever your backend returns for "earnings this week" turns into eight numbers written to those variables — nothing else changes.</p>
+
+        <h3>What it imports</h3>
+        <div class="code">
+          <div class="code-head">dashboard.fscss<button class="copy-btn" data-copy=".s2-import">copy</button></div>
+          <pre class="s2-import"><span class="tok-at">@import</span>((*) from st-core)
+
+<span class="tok-at">@st-root</span>()
+<span class="tok-at">@st-stat-card</span>(.stat-card)
+<span class="tok-at">@st-chart-fill</span>(.chart-fill)
+<span class="tok-at">@st-chart-line</span>(.chart-line)
+<span class="tok-at">@st-chart-dots</span>(.chart-dot-, 7px)
+<span class="tok-at">@st-chart-grid</span>(.chart-grid, 8, 7)
+<span class="tok-at">@st-chart-axis-x</span>(.x-axis)</pre>
+        </div>
+
+        <h3>Markup this generates behavior for</h3>
+        <div class="code">
+          <pre><span class="tok-tag">&lt;div</span> class=<span class="tok-str">"stat-card"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"st-stat-label"</span><span class="tok-tag">&gt;</span>Earnings this week<span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"st-stat-value"</span><span class="tok-tag">&gt;</span>$2,140<span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"st-stat-delta up"</span><span class="tok-tag">&gt;</span>▲ +8.2%<span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-tag">&lt;div</span> class=<span class="tok-str">"chart"</span> style=<span class="tok-str">"position:relative;height:200px"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"chart-fill"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"chart-line"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"chart-dot-1"</span><span class="tok-tag">&gt;&lt;/div&gt;</span> <span class="tok-com">&lt;!-- through chart-dot-8 --&gt;</span>
+  <span class="tok-tag">&lt;div</span> class=<span class="tok-str">"chart-grid"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></pre>
+        </div>
+
+        <h3>Feeding it real data</h3>
+        <div class="code">
+          <div class="code-head">js<button class="copy-btn" data-copy=".s2-js">copy</button></div>
+          <pre class="s2-js"><span class="tok-com">// the only JS this module needs — write the variable, CSS repaints</span>
+<span class="tok-key">function</span> setChartData(el, values) {
+  values.forEach((v, i) => {
+    el.style.setProperty(<span class="tok-str">`--st-p${i + 1}`</span>, (100 - v) + <span class="tok-str">'%'</span>);
+  });
+}
+setChartData(document.querySelector(<span class="tok-str">'.chart'</span>), [20, 35, 40, 55, 48, 72, 60, 80]);</pre>
+        </div>
+
+        <h3>What it's good for</h3>
+        <p>Any dashboard-style view that needs a line chart, area fill, or stat card without pulling in a charting library — earnings graphs, activity trends, category breakdowns. It's not a substitute for a full charting library when you need tooltips-on-every-point, zoom, or export; it's built for the common "show a trend, glanceable, fast" case.</p>
+
+        <figure class="t-shot">
+          <div class="shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1280,height=720,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F40jmbtsgup65yztwydt6.jpg" alt="st-core.fscss chart reference" loading="lazy" decoding="async">
+            <div class="shot-cap">Reference — st-core.fscss chart + stat card, from its dev.to write-up.</div>
+          </div>
+        </figure>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Requires</div><div class="cap-value">FSCSS v1.1.24+</div></div>
+          <div class="card cap-card"><div class="cap-label">Rendering</div><div class="cap-value">clip-path polygons</div></div>
+          <div class="card cap-card"><div class="cap-label">Compiled size</div><div class="cap-value">~0.5kb</div></div>
+        </div>
+      </section>
+
+      <!-- STEP 3 — PROGRESS -->
+      <section class="t-step" id="step-progress">
+        <div class="t-step-tag">Step 3 of 5 — circle-progress.fscss</div>
+        <h2>Track progress toward the payout threshold</h2>
+        <p>The color logic lives inside FSCSS itself, not in your JavaScript. An <code>@event</code> function maps a percentage to a color, and an <code>@arr</code> loop pre-generates every state from <code>.p-0</code> to <code>.p-99</code> at compile time. Your JS only ever swaps a class name.</p>
+
+        <h3>What it imports</h3>
+        <div class="code">
+          <div class="code-head">dashboard.fscss<button class="copy-btn" data-copy=".s3-import">copy</button></div>
+          <pre class="s3-import"><span class="tok-at">@import</span>((*) from circle-progress)
+
+<span class="tok-at">@progress-root</span>()
+<span class="tok-at">@circle-progress</span>(#progress[class^='p-'])
+<span class="tok-at">@progress-animate</span>(2s)</pre>
+        </div>
+
+        <h3>The color logic, defined once</h3>
+        <div class="code">
+          <pre><span class="tok-at">@event</span> range-color(range){
+    if range &lt;= <span class="tok-num">30</span> { return: <span class="tok-str">#D69308</span> }
+    el-if range &lt;= <span class="tok-num">60</span> { return: <span class="tok-str">#86CA1A</span> }
+    el-if range &lt;= <span class="tok-num">95</span> { return: <span class="tok-str">#13B046</span> }
+    el { return: <span class="tok-str">#26FF00</span> }
+}</pre>
+        </div>
+
+        <h3>Generating every percentage state</h3>
+        <div class="code">
+          <pre><span class="tok-at">@arr</span> p-ranges[count(<span class="tok-num">100</span>)]
+.p-<span class="tok-at">@arr</span>.p-ranges[]{
+    <span class="tok-key">$range</span>: <span class="tok-at">@arr</span>.p-ranges[];
+    <span class="tok-at">@progress-range</span>(<span class="tok-key">$range</span>)
+    --progress-color-arc: <span class="tok-at">@event</span>.range-color(<span class="tok-key">$range</span>);
+}</pre>
+        </div>
+
+        <h3>JavaScript — one line, on input</h3>
+        <div class="code">
+          <div class="code-head">js<button class="copy-btn" data-copy=".s3-js">copy</button></div>
+          <pre class="s3-js"><span class="tok-key">const</span> progress = document.getElementById(<span class="tok-str">'progress'</span>);
+<span class="tok-key">function</span> setPayoutProgress(percent) {
+  progress.className = <span class="tok-str">`p-${Math.min(Math.round(percent), 100)}`</span>;
+  progress.textContent = <span class="tok-str">`${percent}%`</span>;
+}
+setPayoutProgress(68); <span class="tok-com">// 68% of the way to the next payout tier</span></pre>
+        </div>
+
+        <h3>What it's good for</h3>
+        <p>Any single-value goal indicator where the color should mean something — storage quotas, onboarding completion, a payout tier, a battery-style health score. Less suited to a value that needs to show multiple segments at once (use <code>st-core</code>'s category bars for that instead).</p>
+
+        <figure class="t-shot">
+          <div class="shot">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRutbustvBCQDL7o6RSaOAs19AL1vQapGN6PeT_1EuyQ&s=10" alt="circle-progress.fscss reference" loading="lazy" decoding="async">
+            <div class="shot-cap">Reference — circle-progress.fscss, from its interactive-demo write-up.</div>
+          </div>
+        </figure>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Requires</div><div class="cap-value">FSCSS v1.1.24+</div></div>
+          <div class="card cap-card"><div class="cap-label">JS role</div><div class="cap-value">writes 1 class name</div></div>
+          <div class="card cap-card"><div class="cap-label">Source</div><div class="cap-value">Figsh/Circle-progress.fscss</div></div>
+        </div>
+      </section>
+
+      <!-- STEP 4 — FORM -->
+      <section class="t-step" id="step-forms">
+        <div class="t-step-tag">Step 4 of 5 — form.fscss</div>
+        <h2>Build the withdrawal request form</h2>
+        <p>Floating labels run entirely on <code>:placeholder-shown</code> — give the input a literal space as its placeholder and the browser already knows, in pure CSS, whether the field is empty and unfocused. Checkboxes and the toggle switch reuse the classic checkbox-hack, so the real input stays keyboard- and form-submit-native.</p>
+
+        <h3>What it imports</h3>
+        <div class="code">
+          <div class="code-head">dashboard.fscss<button class="copy-btn" data-copy=".s4-import">copy</button></div>
+          <pre class="s4-import"><span class="tok-at">@import</span>((form-root, form-group, form-input, form-label,
+         form-float, form-help, form-validation, form-select,
+         form-select-arrow, form-btn, form-btn-primary) from form)
+
+<span class="tok-at">@form-root</span>()
+<span class="tok-at">@form-group</span>(.form-group)
+<span class="tok-at">@form-input</span>(.form-input)
+<span class="tok-at">@form-label</span>(.form-label)
+<span class="tok-at">@form-float</span>(.form-group, .form-input, .form-label)
+<span class="tok-at">@form-validation</span>(.form-group)
+<span class="tok-at">@form-btn</span>(.form-btn)
+<span class="tok-at">@form-btn-primary</span>(.form-btn-primary)</pre>
+        </div>
+
+        <h3>The markup — note the input-before-label order</h3>
+        <div class="code">
+          <pre><span class="tok-tag">&lt;div</span> class=<span class="tok-str">"form-group is-success"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;input</span> class=<span class="tok-str">"form-input"</span> type=<span class="tok-str">"number"</span> placeholder=<span class="tok-str">" "</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;label</span> class=<span class="tok-str">"form-label"</span><span class="tok-tag">&gt;</span>Withdrawal amount<span class="tok-tag">&lt;/label&gt;</span>
+  <span class="tok-tag">&lt;span</span> class=<span class="tok-str">"form-help"</span><span class="tok-tag">&gt;</span>Available: $2,140<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-tag">&lt;button</span> class=<span class="tok-str">"form-btn form-btn-primary"</span> style=<span class="tok-str">"width:100%"</span><span class="tok-tag">&gt;</span>Request withdrawal<span class="tok-tag">&lt;/button&gt;</span></pre>
+        </div>
+
+        <h3>Two rules that make it work</h3>
+        <ul class="plain">
+          <li>The placeholder must be a literal space (<code>placeholder=" "</code>), not an empty string — that's what <code>:placeholder-shown</code> checks against.</li>
+          <li>The <code>&lt;input&gt;</code> must come <em>before</em> the <code>&lt;label&gt;</code> in markup order, because the floating-label rule uses a sibling selector (<code>+</code>) that only looks forward.</li>
+        </ul>
+
+        <h3>What it's good for</h3>
+        <p>Any form where the visual states — resting, focused, filled, valid, invalid — should react automatically instead of being toggled by JavaScript on every keystroke. Your own validation logic (an async check, a regex) still needs real code; this module only owns how the result of that check <em>looks</em>.</p>
+
+        <figure class="t-shot">
+          <div class="shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fepkahanv1aoudyfujlz5.jpg" alt="form.fscss reference" loading="lazy" decoding="async">
+            <div class="shot-cap">Reference — form.fscss floating-label card, from its dev.to write-up.</div>
+          </div>
+        </figure>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Requires</div><div class="cap-value">FSCSS v1.1.24+</div></div>
+          <div class="card cap-card"><div class="cap-label">JS needed</div><div class="cap-value">0, for visual states</div></div>
+          <div class="card cap-card"><div class="cap-label">Source</div><div class="cap-value">fscss-ttr/form.fscss</div></div>
+        </div>
+      </section>
+
+      <!-- STEP 5 — CUBE -->
+      <section class="t-step" id="step-cube">
+        <div class="t-step-tag">Step 5 of 5 — cube.fscss</div>
+        <h2>Add the milestone badge</h2>
+        <p>A small, real 3D cube — six absolutely-positioned faces on a <code>preserve-3d</code> parent — that appears once a creator crosses a milestone. It's the smallest piece of this build on purpose: a detail that rewards a threshold, not the centerpiece of the page.</p>
+
+        <h3>What it imports</h3>
+        <div class="code">
+          <div class="code-head">dashboard.fscss<button class="copy-btn" data-copy=".s5-import">copy</button></div>
+          <pre class="s5-import"><span class="tok-at">@import</span>((cube-root, cube-wrapper, cube-face, cube-face-front,
+         cube-face-back, cube-face-left, cube-face-right,
+         cube-face-top, cube-face-bottom, cube-micro-glass) from cube)
+
+<span class="tok-at">@cube-root</span>()
+<span class="tok-at">@cube-wrapper</span>(.milestone-badge)
+<span class="tok-at">@cube-face</span>(.milestone-badge div)
+<span class="tok-at">@cube-face-front</span>(.milestone-badge .f1)
+<span class="tok-at">@cube-face-back</span>(.milestone-badge .f2)
+<span class="tok-at">@cube-face-left</span>(.milestone-badge .f3)
+<span class="tok-at">@cube-face-right</span>(.milestone-badge .f4)
+<span class="tok-at">@cube-face-top</span>(.milestone-badge .f5)
+<span class="tok-at">@cube-face-bottom</span>(.milestone-badge .f6)
+<span class="tok-at">@cube-micro-glass</span>(.milestone-badge .f1)
+
+.milestone-badge {
+  <span class="tok-at">@cube-size</span>(48px)
+  transform: rotateY(30deg) rotateX(15deg);
+  animation: badge-spin 6s linear infinite;
+}
+
+<span class="tok-at">@keyframes</span> badge-spin {
+  0%   { transform: rotateX(15deg) rotateY(30deg); }
+  100% { transform: rotateX(375deg) rotateY(390deg); }
+}</pre>
+        </div>
+
+        <h3>What it's good for</h3>
+        <p>Small decorative or state-signaling 3D — an achievement badge, a spinning brand mark, a decision cube. The face and face-content mixins are decoupled on purpose, so the same six-face geometry works for a dice roll, a rotating logo, or a badge like this one, just by swapping which "micro" effect sits on each face.</p>
+
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Because it's the smallest visual footprint of the five modules here, this is also the easiest one to cut if the page is running heavy — nothing else on the dashboard depends on it.</p>
+        </div>
+
+        <figure class="t-shot">
+          <div class="shot">
+            <img src="https://media2.dev.to/dynamic/image/width=1200,height=627,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fbp193w8ubehu8lqttez9.jpg" alt="cube.fscss reference" loading="lazy" decoding="async">
+            <div class="shot-cap">Reference — cube.fscss, from its dev.to write-up. (dice pips shown; the badge here uses cube-micro-glass instead.)</div>
+          </div>
+        </figure>
+
+        <div class="capgrid">
+          <div class="card cap-card"><div class="cap-label">Requires</div><div class="cap-value">FSCSS v1.1.24+</div></div>
+          <div class="card cap-card"><div class="cap-label">Geometry</div><div class="cap-value">real 3D, preserve-3d</div></div>
+          <div class="card cap-card"><div class="cap-label">Micro effects</div><div class="cap-value">8 available</div></div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- FULL FILE -->
+      <section class="t-step" id="full-file">
+        <div class="t-step-tag">Putting it together</div>
+        <h2>The full assembled <code>dashboard.fscss</code></h2>
+        <p>Every import from the five steps above, stacked in one file. This is what actually ships — either loaded live via the CDN runtime while you're building, or compiled once with the CLI for production.</p>
+        <div class="code">
+          <div class="code-head">src/dashboard.fscss<button class="copy-btn" data-copy=".s-full">copy</button></div>
+          <pre class="s-full"><span class="tok-com">/* shell */</span>
+<span class="tok-at">@import</span>((page-root, page-base) from customizable)
+<span class="tok-at">@page-root</span>()
+<span class="tok-at">@page-base</span>(body)
+
+<span class="tok-com">/* charts + stats */</span>
+<span class="tok-at">@import</span>((*) from st-core)
+<span class="tok-at">@st-root</span>()
+<span class="tok-at">@st-stat-card</span>(.stat-card)
+<span class="tok-at">@st-chart-fill</span>(.chart-fill)
+<span class="tok-at">@st-chart-line</span>(.chart-line)
+<span class="tok-at">@st-chart-dots</span>(.chart-dot-, 7px)
+<span class="tok-at">@st-chart-grid</span>(.chart-grid, 8, 7)
+
+<span class="tok-com">/* payout goal ring */</span>
+<span class="tok-at">@import</span>((*) from circle-progress)
+<span class="tok-at">@progress-root</span>()
+<span class="tok-at">@circle-progress</span>(#progress[class^='p-'])
+
+<span class="tok-com">/* withdrawal form */</span>
+<span class="tok-at">@import</span>((form-root, form-group, form-input, form-label,
+         form-float, form-help, form-btn, form-btn-primary) from form)
+<span class="tok-at">@form-root</span>()
+<span class="tok-at">@form-group</span>(.form-group)
+<span class="tok-at">@form-input</span>(.form-input)
+<span class="tok-at">@form-label</span>(.form-label)
+<span class="tok-at">@form-float</span>(.form-group, .form-input, .form-label)
+<span class="tok-at">@form-btn</span>(.form-btn)
+<span class="tok-at">@form-btn-primary</span>(.form-btn-primary)
+
+<span class="tok-com">/* milestone badge */</span>
+<span class="tok-at">@import</span>((cube-root, cube-wrapper, cube-face-front,
+         cube-micro-glass) from cube)
+<span class="tok-at">@cube-root</span>()
+<span class="tok-at">@cube-wrapper</span>(.milestone-badge)
+<span class="tok-at">@cube-face-front</span>(.milestone-badge .f1)
+<span class="tok-at">@cube-micro-glass</span>(.milestone-badge .f1)
+
+<span class="tok-com">/* brand override — cascades to every module above */</span>
+:root {
+  --page-accent: <span class="tok-str">#8f6bff</span>;
+  --st-accent:   <span class="tok-str">#8f6bff</span>;
+}</pre>
+        </div>
+        <p>Note the brand override at the bottom: because every module reads its accent from its own CSS custom property, one small block at the end of the file re-themes the chart, the stat card, and the page shell together — the same pattern <code>customizable.fscss</code> uses on its own.</p>
+      </section>
+
+      <!-- SHIPPING -->
+      <section class="t-step" id="shipping">
+        <div class="t-step-tag">Going to production</div>
+        <h2>Compile once, ship plain CSS</h2>
+        <p>Once the dashboard looks right under the CDN runtime, swap it for a compiled build — same source, no runtime dependency in production.</p>
+        <div class="code">
+          <div class="code-head">bash<button class="copy-btn" data-copy=".ship-cli">copy</button></div>
+          <pre class="ship-cli">fscss src/dashboard.fscss dist/dashboard.css</pre>
+        </div>
+        <p>Then swap the CDN <code>&lt;script&gt;</code> for a plain stylesheet link:</p>
+        <div class="code">
+          <pre><span class="tok-com">&lt;!-- before, while building --&gt;</span>
+<span class="tok-tag">&lt;script</span> src=<span class="tok-str">"https://cdn.jsdelivr.net/npm/fscss@1.1.24/exec.min.js"</span> defer<span class="tok-tag">&gt;&lt;/script&gt;</span>
+<span class="tok-tag">&lt;style&gt;</span>@import((*) from st-core) ...<span class="tok-tag">&lt;/style&gt;</span>
+
+<span class="tok-com">&lt;!-- after, in production --&gt;</span>
+<span class="tok-tag">&lt;link</span> rel=<span class="tok-str">"stylesheet"</span> href=<span class="tok-str">"dist/dashboard.css"</span><span class="tok-tag">&gt;</span></pre>
+        </div>
+        <p>If the source files change often, wire the compile step into CI so <code>dist/*.css</code> stays in sync automatically — a workflow that watches for changes to <code>**.fscss</code>, runs the FSCSS CLI, and commits or deploys the result. That pattern (compile-on-push, deploy the compiled output) is documented in the ecosystem's own CI write-up if you want the exact GitHub Actions setup.</p>
+        <div class="module-links" style="display:flex; gap:10px; margin-top: -6px;">
+          <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss-ttr/auto-compile-fscss-to-css-with-github-actions-github-pages-4e0k" target="_blank" rel="noopener">Read the CI write-up</a>
+        </div>
+      </section>
+
+      <!-- REFERENCE TABLE -->
+      <section class="t-step" id="reference">
+        <div class="t-step-tag">Reference</div>
+        <h2>Capability &amp; version reference</h2>
+        <p>What each module is for, in one line, plus the version floor used throughout this tutorial.</p>
+        <div class="table-wrap">
+          <table class="ref">
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Good for</th>
+                <th>Rendering technique</th>
+                <th>Requires</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono">customizable.fscss</td>
+                <td>Recurring page shapes — nav, hero, footer, 404, long-form typography</td>
+                <td>Flexbox/grid layout, one shared token layer</td>
+                <td>FSCSS v1.1.24+</td>
+              </tr>
+              <tr>
+                <td class="mono">st-core.fscss</td>
+                <td>Charts, stat cards, category bars for dashboard-style views</td>
+                <td><code class="mono">clip-path: polygon()</code>, CSS custom properties</td>
+                <td>FSCSS v1.1.24+</td>
+              </tr>
+              <tr>
+                <td class="mono">circle-progress.fscss</td>
+                <td>Single-value goal indicators with meaningful color at each range</td>
+                <td><code class="mono">@event</code> logic + <code class="mono">@arr</code>-generated state classes</td>
+                <td>FSCSS v1.1.24+</td>
+              </tr>
+              <tr>
+                <td class="mono">form.fscss</td>
+                <td>Floating-label inputs, checkboxes, switches, inline validation</td>
+                <td><code class="mono">:placeholder-shown</code>, checkbox-hack, pseudo-elements</td>
+                <td>FSCSS v1.1.24+</td>
+              </tr>
+              <tr>
+                <td class="mono">cube.fscss</td>
+                <td>Small real-3D flourishes — badges, dice, a rotating mark</td>
+                <td><code class="mono">preserve-3d</code>, <code class="mono">translateZ</code> face geometry</td>
+                <td>FSCSS v1.1.24+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="next-nav">
+        <a class="btn btn-ghost" href="/#modules">&larr; Back to module overview</a>
+        <a class="btn btn-primary" href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">Read the full FSCSS docs</a>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand"><img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS"> FSCSS Hub</a>
+        <p>A learning and build hub for FSCSS and its module ecosystem — part of the Figsh network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="/#syntax">Syntax primer</a></li>
+          <li><a href="/#modules">Modules</a></li>
+          <li><a href="tutorial">Full tutorial</a></li>
+          <li><a href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">Full documentation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://devtem.org" target="_blank" rel="noopener">DevTemple</a></li>
+          <li><a href="https://fscss.devtem.org" target="_blank" rel="noopener">FSCSS Docs</a></li>
+          <li><a href="https://design.devtem.org" target="_blank" rel="noopener">devtemDesign</a></li>
+          <li><a href="https://invites.devtem.org" target="_blank" rel="noopener">D Invites</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub org</a></li>
+          <li><a href="https://dev.to/fscss" target="_blank" rel="noopener">dev.to/fscss</a></li>
+          <li><a href="https://dev.to/fscss-ttr" target="_blank" rel="noopener">dev.to/fscss-ttr</a></li>
+          <li><a href="https://dev.to/figsh" target="_blank" rel="noopener">dev.to/figsh</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 FSCSS Hub. Part of the Figsh network. MIT licensed modules.</p>
+      <div class="footer-social">
+        <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.4 7.86 10.94.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55A10.5 10.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg></a>
+        <a href="https://dev.to/fscss" target="_blank" rel="noopener" aria-label="dev.to"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm3.4 5.1c-.3-.2-.7-.3-1.2-.3H4.7v8.4h1.6c.5 0 .9-.1 1.2-.3.9-.5 1.4-1.6 1.4-3.9 0-2.3-.5-3.4-1.4-3.9zm-.4 6.5c-.1.1-.4.2-.7.2h-.2v-5.4h.2c.3 0 .6.1.7.2.4.3.6 1.1.6 2.5 0 1.4-.2 2.2-.6 2.5zm5.6-6.8H9.9v8.4h2.7v-1.6h-1.3v-1.7h1.1v-1.5h-1.1v-1.9h1.3zm5.9 0h-1.6l-1 4.6-1-4.6h-1.7l2 8.4h1.4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/global.js"></script>
+</body>
+</html>
+I'm 
