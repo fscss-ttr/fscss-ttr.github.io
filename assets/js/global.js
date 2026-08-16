@@ -70,19 +70,25 @@
   /* ---- Active link highlight based on section in view -------------------*/
   function initActiveLink() {
     var sections = Array.prototype.slice.call(document.querySelectorAll('main [id]'));
-    var links = Array.prototype.slice.call(document.querySelectorAll('[data-nav-links] a[href^="#"]'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-nav-links] a[href^="#"], [data-toc] a[href^="#"]'));
     if (!sections.length || !links.length || !('IntersectionObserver' in window)) return;
 
     var map = {};
-    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    links.forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (href.charAt(0) !== '#') return;
+      var id = href.slice(1);
+      map[id] = map[id] || [];
+      map[id].push(a);
+    });
 
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        var link = map[entry.target.id];
-        if (!link) return;
+        var linksForId = map[entry.target.id];
+        if (!linksForId) return;
         if (entry.isIntersecting) {
           links.forEach(function (a) { a.classList.remove('is-active'); });
-          link.classList.add('is-active');
+          linksForId.forEach(function (a) { a.classList.add('is-active'); });
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
@@ -164,3 +170,8 @@
     initReveal();
   });
 })();
+
+const footerbottom = document.querySelector(".footer-bottom");
+if(footerbottom){
+  footerbottom.querySelector("p").innerHTML = `&copy; ${new Date().getFullYear()} FSCSS Hub. Part of the Figsh network. MIT licensed modules.`;
+  }
