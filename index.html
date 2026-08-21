@@ -172,7 +172,7 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="/" class="brand">
-      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.1.24</span>
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.1.25</span>
     </a>
 
     <nav class="nav-links" data-nav-links>
@@ -232,29 +232,28 @@
             <button data-tab="get">FSCSS compiles to</button>
           </div>
           <div class="demo-body">
-            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* variables + a style store */</span>
-<span class="tok-key">$primary</span>: #8f6bff;
-<span class="tok-key">$radius</span>: <span class="tok-num">12px</span>;
-
-<span class="tok-at">@fun</span>(card-style){
-  background: <span class="tok-str">white</span>;
-  border-radius: <span class="tok-key">$radius</span>;
-  box-shadow: <span class="tok-num">0 4px 6px</span> rgba(0,0,0,.1);
-}
+            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* NEW in v1.1.25 — pattern() */</span>
+<span class="tok-at">pattern</span>(<span class="tok-num">0.5</span>: <span class="tok-str">"Hello World card"</span>, `
+  border-radius: <span class="tok-num">12px</span>;
+  padding: <span class="tok-num">24px</span>;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: <span class="tok-str">#fff</span>;
+  box-shadow: <span class="tok-num">0 8px 24px</span> rgba(0,0,0,.25);
+`)
 
 .card {
-  <span class="tok-at">@fun</span>.card-style
-  border: <span class="tok-num">1px</span> solid <span class="tok-key">$primary</span>;
+  hello world card
 }</pre></div>
             <div class="demo-pane" data-pane="get"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* plain, browser-ready CSS */</span>
 .card {
-  background: <span class="tok-str">white</span>;
   border-radius: <span class="tok-num">12px</span>;
-  box-shadow: <span class="tok-num">0 4px 6px</span> rgba(0,0,0,.1);
-  border: <span class="tok-num">1px</span> solid #8f6bff;
+  padding: <span class="tok-num">24px</span>;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: <span class="tok-str">#fff</span>;
+  box-shadow: <span class="tok-num">0 8px 24px</span> rgba(0,0,0,.25);
 }</pre></div>
           </div>
-          <div class="demo-foot"><span class="dot"></span> Same output whether compiled via CLI or resolved live by the CDN runtime.</div>
+          <div class="demo-foot"><span class="dot"></span> New in v1.1.25 — describe styles in plain language; FSCSS matches by similarity.</div>
         </div>
       </div>
     </div>
@@ -290,8 +289,8 @@
         </div>
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Reusable blocks</div>
-          <h3>@define, with parameters</h3>
-          <p><code class="mono">@define</code> turns a block into a parameterized mixin — pass values in, get a fully-resolved rule out. This is how every module in the ecosystem ships its components.</p>
+          <h3>@define + pattern()</h3>
+          <p><code class="mono">@define</code> turns a block into a parameterized mixin. <code class="mono">pattern()</code> (new in v1.1.25) lets you describe styles in plain language — FSCSS matches by similarity and injects the CSS.</p>
         </div>
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Two ways to ship</div>
@@ -308,7 +307,7 @@
       <div class="section-head" data-reveal>
         <span class="eyebrow">Syntax primer</span>
         <h2>Enough FSCSS to read every example on this page</h2>
-        <p>Six pieces of syntax cover almost everything the modules below use. Want the long version, with a full project built step by step? See the <a href="tutorial.html" style="color:var(--accent-2); text-decoration: underline;">full tutorial</a>.</p>
+        <p>Seven pieces of syntax cover almost everything the modules below use — including the new <code class="mono">pattern()</code> from v1.1.25. Want the long version, with a full project built step by step? See the <a href="tutorial.html" style="color:var(--accent-2); text-decoration: underline;">full tutorial</a>.</p>
       </div>
 
       <div class="primer-grid">
@@ -334,6 +333,16 @@
   color: <span class="tok-at">@use</span>(fg);
 }
 .card { <span class="tok-at">@card</span>(#079, #ddd) }</pre></div>
+        </div>
+
+        <div class="card primer-card" data-reveal>
+          <h4>pattern() — semantic match <span class="pill" style="font-size:10px;margin-left:6px;">NEW</span></h4>
+          <p class="desc">Describe styles in plain language; FSCSS matches by similarity.</p>
+          <div class="code"><pre><span class="tok-at">pattern</span>(<span class="tok-num">0.6</span>: <span class="tok-str">"rounded primary button"</span>, `
+  border: none; border-radius: <span class="tok-num">8px</span>;
+  background: <span class="tok-str">#fff</span>; color: <span class="tok-str">#764ba2</span>;
+`)
+.btn { rounded primary button }</pre></div>
         </div>
 
         <div class="card primer-card" data-reveal>
@@ -617,10 +626,10 @@
           <h4>DevTemple</h4>
           <p>Marketplace &amp; primary adopter</p>
         </a>
-        <a class="card sponsor-card" href="https://invites.devtem.org" target="_blank" rel="noopener" data-reveal>
-          <div class="mark"><img src="https://invites.devtem.org/assets/img/logo.png" alt="D invites" loading="lazy"></div>
-          <h4>D Invites</h4>
-          <p>Event pages built on FSCSS</p>
+        <a class="card sponsor-card" href="https://chart.devtem.org" target="_blank" rel="noopener" data-reveal>
+          <div class="mark"><img src="https://chart.devtem.org/assets/img/icon.png" alt="D invites" loading="lazy"></div>
+          <h4>ProvChart</h4>
+          <p>ProvChart — Pure CSS Charts. No Libraries. No Runtime.</p>
         </a>
         <a class="card sponsor-card" href="https://design.devtem.org" target="_blank" rel="noopener" data-reveal>
           <div class="mark"><img src="https://fscss.devtem.org/assets/images/fscss.png" loading="lazy" alt="DevtemDesign"></div>
@@ -643,6 +652,10 @@
 
       <div class="resource-grid">
         <div class="card article-list" data-reveal>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss/fscss-v1125-pattern-is-here-5e5f" target="_blank" rel="noopener">FSCSS v1.1.25: pattern() is here — write what you mean</a>
+            <span class="tag">new</span>
+          </div>
           <div class="article-row">
             <a class="title" href="tutorial.html">Full tutorial — building a complete site with FSCSS modules</a>
             <span class="tag">hub</span>
@@ -688,6 +701,10 @@
           </a>
           <a class="card link-card" href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">
             <div><div class="l-name">Documentation</div><div class="l-desc">fscss.devtem.org/docs</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://fscss.devtem.org/pattern" target="_blank" rel="noopener">
+            <div><div class="l-name">pattern() docs</div><div class="l-desc">Semantic matching — new in v1.1.25</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
           <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS" target="_blank" rel="noopener">
@@ -749,7 +766,7 @@
           <li><a href="https://devtem.org" target="_blank" rel="noopener">DevTemple</a></li>
           <li><a href="https://fscss.devtem.org" target="_blank" rel="noopener">FSCSS Docs</a></li>
           <li><a href="https://design.devtem.org" target="_blank" rel="noopener">devtemDesign</a></li>
-          <li><a href="https://invites.devtem.org" target="_blank" rel="noopener">D Invites</a></li>
+          <li><a href="https://chart.devtem.org" target="_blank" rel="noopener">ProvChart</a></li>
         </ul>
       </div>
       <div class="footer-col">
