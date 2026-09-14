@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create your first FSCSS module — Hub Guide | FSCSS Hub</title>
+  <meta name="description" content="How to author an FSCSS module: root tokens, namespaced @define helpers, selective imports, package.json, and a publish checklist.">
+  <link rel="canonical" href="https://hub.devtem.org/create-module">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:title" content="Create your first FSCSS module — Hub Guide">
+  <meta property="og:description" content="Root tokens, @define mixins, selective exports, and a publish checklist for FSCSS modules.">
+  <meta property="og:url" content="https://hub.devtem.org/create-module">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
+  <meta property="og:site_name" content="FSCSS Hub">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="https://fscss.devtem.org/assets/images/fscss.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <style>
+    /* Same layout system as tutorial.html — margins from .wrap only */
+    .t-hero {
+      padding: clamp(48px, 7vw, 80px) 0 clamp(36px, 5vw, 52px);
+      border-bottom: 1px solid var(--border);
+    }
+    .t-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -.015em;
+      max-width: 780px;
+      line-height: 1.1;
+    }
+    .t-hero p.lead {
+      margin-top: 16px;
+      color: var(--text-dim);
+      font-size: 16.5px;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+    .t-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+    .t-layout {
+      display: grid;
+      grid-template-columns: minmax(200px, 220px) minmax(0, 1fr);
+      gap: clamp(28px, 4vw, 48px);
+      padding: clamp(40px, 6vw, 72px) 0 100px;
+      align-items: start;
+    }
+    .t-toc {
+      position: sticky;
+      top: 88px;
+      max-height: calc(100vh - 110px);
+      overflow: auto;
+    }
+    .t-toc-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .t-toc ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border-left: 1px solid var(--border);
+    }
+    .t-toc a {
+      display: block;
+      padding: 7px 0 7px 14px;
+      font-size: 13.5px;
+      color: var(--muted);
+      border-left: 2px solid transparent;
+      margin-left: -1px;
+      transition: color .18s var(--ease), border-color .18s var(--ease);
+    }
+    .t-toc a:hover { color: var(--text-dim); }
+    .t-toc a.is-active { color: var(--accent-2); border-left-color: var(--accent); }
+
+    .t-content { min-width: 0; max-width: 720px; }
+    .t-step {
+      padding-top: 4px;
+      margin-bottom: clamp(48px, 6vw, 72px);
+      scroll-margin-top: 90px;
+    }
+    .t-step-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+    .t-step h2 {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      letter-spacing: -.01em;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .t-step h3 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      margin: 26px 0 10px;
+    }
+    .t-step p {
+      color: var(--text-dim);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+    .t-step p code,
+    .t-step li code {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--accent-2);
+      background: var(--surface-2);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+    .t-step ul.plain,
+    .t-step ol.plain {
+      margin: 0 0 16px;
+      padding-left: 1.25rem;
+      color: var(--text-dim);
+      font-size: 14.5px;
+      list-style: disc;
+    }
+    .t-step ol.plain { list-style: decimal; }
+    .t-step ul.plain li,
+    .t-step ol.plain li { margin-bottom: 6px; }
+    .t-step .code { margin: 16px 0 20px; max-width: 100%; }
+
+    .capgrid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 22px;
+    }
+    .capgrid .cap-card { padding: 16px 18px; }
+    .cap-card .cap-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .cap-card .cap-value { font-size: 14px; font-weight: 600; }
+
+    .file-tree {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.9;
+      background: #0d0b18;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      color: var(--text-dim);
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      max-width: 100%;
+    }
+    .file-tree .dir { color: var(--accent-2); }
+    .file-tree .fscss-file { color: var(--mint); }
+    .file-tree .note { color: var(--muted); font-style: italic; }
+
+    .note-box {
+      display: flex;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      border: 1px solid var(--border-strong);
+      margin: 18px 0 22px;
+    }
+    .note-box .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 8px var(--mint);
+      flex: none;
+      margin-top: 7px;
+    }
+    .note-box p { margin: 0; color: var(--text-dim); font-size: 14px; }
+
+    .check-list {
+      margin: 16px 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 14.5px;
+    }
+    .check-list li:last-child { border-bottom: 0; }
+    .check-list .box {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      margin-top: 2px;
+    }
+
+    .next-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .t-layout { grid-template-columns: 1fr; gap: 28px; }
+      .t-toc {
+        position: static;
+        max-height: none;
+        order: -1;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 16px 18px;
+        background: var(--surface);
+      }
+      .t-toc ol {
+        border-left: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px 12px;
+      }
+      .t-toc a { border-left: 0; padding: 6px 0; margin-left: 0; }
+      .t-content { max-width: none; }
+    }
+    @media (max-width: 700px) {
+      .capgrid { grid-template-columns: 1fr; }
+      .t-toc ol { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a href="/" class="brand">
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.1</span>
+    </a>
+    <nav class="nav-links" data-nav-links>
+      <a href="/#syntax">Syntax</a>
+      <a href="/#modules">Modules</a>
+      <a href="/#combine">Build</a>
+      <a href="tutorial">Tutorial</a>
+      <a href="create-module" class="is-active">Create module</a>
+      <a href="/#ecosystem">Ecosystem</a>
+      <a href="/#resources">Resources</a>
+    </nav>
+    <div class="nav-actions">
+      <label class="theme-toggle" title="Toggle light / dark">
+        <input type="checkbox" data-theme-toggle aria-label="Toggle light theme">
+        <span class="knob"></span>
+      </label>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub</a>
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="t-hero">
+    <div class="wrap">
+      <span class="eyebrow">Authoring guide</span>
+      <h1>Create your first FSCSS module</h1>
+      <p class="lead">A module is a small, namespaced library of <code class="mono">@define</code> helpers plus design tokens. Consumers import only what they need. This guide walks from a single file to a publishable package — the same pattern behind circle-progress, form, and st-core.</p>
+      <div class="t-meta">
+        <span class="pill">~15 min read</span>
+        <span class="pill">FSCSS v1.1.15+</span>
+        <span class="pill">@define</span>
+        <span class="pill live">Copy-paste examples</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap t-layout">
+
+    <aside class="t-toc" data-toc>
+      <div class="t-toc-label">On this page</div>
+      <ol>
+        <li><a href="#what">What a module is</a></li>
+        <li><a href="#anatomy">Anatomy</a></li>
+        <li><a href="#tokens">1. Root tokens</a></li>
+        <li><a href="#defines">2. Define helpers</a></li>
+        <li><a href="#namespace">3. Namespace rules</a></li>
+        <li><a href="#consume">4. How others import it</a></li>
+        <li><a href="#package">5. package.json</a></li>
+        <li><a href="#sample">Minimal sample</a></li>
+        <li><a href="#pitfalls">Pitfalls</a></li>
+        <li><a href="#checklist">Publish checklist</a></li>
+      </ol>
+    </aside>
+
+    <div class="t-content">
+
+      <section class="t-step" id="what">
+        <div class="t-step-tag">00 · Idea</div>
+        <h2>What a module is (and isn’t)</h2>
+        <p>An FSCSS module is <strong>not</strong> a JavaScript package with a runtime API. It’s a <code>.fscss</code> file (or a few) that exposes parameterized mixins via <code>@define</code>. When someone writes:</p>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((badge-root, badge) from my-badge)
+<span class="tok-at">@badge-root</span>()
+<span class="tok-at">@badge</span>(.status-badge)</pre>
+        </div>
+        <p>…the compiler (CLI or browser runtime) pulls those defines into their stylesheet and expands the calls into plain CSS.</p>
+        <ul class="plain">
+          <li><strong>Is:</strong> tokens + shapes + helpers, pure CSS output</li>
+          <li><strong>Isn’t:</strong> a component framework, a JS plugin, or a global style dump</li>
+        </ul>
+      </section>
+
+      <section class="t-step" id="anatomy">
+        <div class="t-step-tag">01 · Structure</div>
+        <h2>Anatomy of a small module</h2>
+        <pre class="file-tree"><span class="dir">my-badge/</span>
+├── <span class="fscss-file">my-badge.fscss</span>     <span class="note">← defines + tokens</span>
+├── package.json         <span class="note">← name, helpers list, fscss_version</span>
+├── README.md
+└── samples/
+    └── example.html     <span class="note">← runtime demo</span></pre>
+        <p>One source file is enough. Split only when the surface area grows (e.g. themes vs geometry).</p>
+      </section>
+
+      <section class="t-step" id="tokens">
+        <div class="t-step-tag">02 · Tokens</div>
+        <h2>Start with a root define</h2>
+        <p>Every mature module begins with a <code>*-root</code> helper that writes CSS custom properties. Callers override those properties later without forking your defines.</p>
+        <div class="code">
+          <div class="code-head">my-badge.fscss</div>
+          <pre><span class="tok-at">@define</span> badge-root(root:root){`
+:@use(root) {
+  --badge-size: 12px;
+  --badge-bg: #8f6bff;
+  --badge-fg: #fff;
+  --badge-radius: 999px;
+  --badge-pad-x: 8px;
+  --badge-font: 11px;
+}
+`}</pre>
+        </div>
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Prefix every token with your module name (<code>--badge-*</code>, <code>--progress-*</code>, <code>--st-*</code>). That is how five modules share one page without colliding.</p>
+        </div>
+      </section>
+
+      <section class="t-step" id="defines">
+        <div class="t-step-tag">03 · Helpers</div>
+        <h2>Define the public surface</h2>
+        <p>Helpers take a selector (and optional knobs), and emit real CSS for that selector. Use <code>@use(param)</code> for parameters.</p>
+        <div class="code">
+          <pre><span class="tok-at">@define</span> badge(sel:.badge){`
+@use(sel) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--badge-size);
+  padding: 0 var(--badge-pad-x);
+  border-radius: var(--badge-radius);
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  font-size: var(--badge-font);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+`}
+
+<span class="tok-at">@define</span> badge-dot(sel:.badge)::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .85;
+}
+
+<span class="tok-com">/* small theme helpers — optional */</span>
+<span class="tok-at">@define</span> badge-theme-success(){
+  --badge-bg: #1cac52;
+}
+<span class="tok-at">@define</span> badge-theme-danger(){
+  --badge-bg: #ff5070;
+}</pre>
+        </div>
+        <h3>Template blocks</h3>
+        <p>When a define must expand loops or multi-line structures, wrap the body in backticks (as circle-progress and st-core do). Keep simple property lists as plain define bodies when you can — easier to read.</p>
+      </section>
+
+      <section class="t-step" id="namespace">
+        <div class="t-step-tag">04 · Naming</div>
+        <h2>Namespace rules that keep the ecosystem calm</h2>
+        <ul class="plain">
+          <li><strong>Prefix defines</strong> with the module id: <code>badge-root</code>, <code>badge</code>, <code>badge-theme-*</code> — not generic <code>root</code> / <code>card</code>.</li>
+          <li><strong>Prefix CSS variables</strong> the same way: <code>--badge-bg</code>, never <code>--bg</code>.</li>
+          <li><strong>Prefix keyframes</strong> if you ship animations: <code>badge-pulse</code>, not <code>pulse</code>.</li>
+          <li><strong>Accept a selector argument</strong> on structural defines so callers map your styles onto their class names.</li>
+        </ul>
+        <div class="capgrid">
+          <div class="card cap-card">
+            <div class="cap-label">Good</div>
+            <div class="cap-value mono">@badge(.status)</div>
+          </div>
+          <div class="card cap-card">
+            <div class="cap-label">Risky</div>
+            <div class="cap-value mono">@card(.card)</div>
+          </div>
+          <div class="card cap-card">
+            <div class="cap-label">Collision</div>
+            <div class="cap-value mono">--color: …</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="t-step" id="consume">
+        <div class="t-step-tag">05 · Consumption</div>
+        <h2>How others import your module</h2>
+        <h3>Selective (preferred in production)</h3>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((badge-root, badge, badge-theme-success) from my-badge)
+
+<span class="tok-at">@badge-root</span>()
+<span class="tok-at">@badge</span>(.status-badge)
+.status-ok { <span class="tok-at">@badge-theme-success</span>() }</pre>
+        </div>
+        <h3>Wildcard (fine while exploring)</h3>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((*) from my-badge)</pre>
+        </div>
+        <h3>Runtime vs CLI</h3>
+        <ul class="plain">
+          <li><strong>Prototype:</strong> <code>https://cdn.jsdelivr.net/npm/fscss@1.2.1/runtime.min.js</code> + a <code>&lt;style&gt;</code> block</li>
+          <li><strong>Ship:</strong> <code>fscss my-page.fscss dist/my-page.css</code> and link the CSS only</li>
+        </ul>
+      </section>
+
+      <section class="t-step" id="package">
+        <div class="t-step-tag">06 · Metadata</div>
+        <h2>package.json for the module registry</h2>
+        <p>Modules in the ecosystem declare helpers so tooling and docs know the public surface.</p>
+        <div class="code">
+          <div class="code-head">package.json</div>
+          <pre>{
+  "name": "my-badge",
+  "version": "1.0.0",
+  "description": "Small status badge module for FSCSS",
+  "extension": "fscss",
+  "fscss_version": "^1.1.15",
+  "file": {
+    "usage": {
+      "directive": "badge",
+      "helpers": [
+        "badge-root",
+        "badge",
+        "badge-dot",
+        "badge-theme-success",
+        "badge-theme-danger"
+      ]
+    },
+    "modules": ["./my-badge.fscss"],
+    "remote": "./my-badge.fscss"
+  },
+  "keywords": ["fscss", "badge", "ui", "module"],
+  "license": "MIT"
+}</pre>
+        </div>
+        <p><code>fscss_version</code> is the minimum language version. If you only need <code>@define</code>, <code>^1.1.15</code> is honest. Document 1.2.1 in the README for CDN examples.</p>
+      </section>
+
+      <section class="t-step" id="sample">
+        <div class="t-step-tag">07 · End-to-end</div>
+        <h2>Minimal sample page</h2>
+        <div class="code">
+          <div class="code-head">samples/example.html</div>
+          <pre><span class="tok-tag">&lt;script</span> src=<span class="tok-str">"https://cdn.jsdelivr.net/npm/fscss@1.2.1/runtime.min.js"</span> defer<span class="tok-tag">&gt;&lt;/script&gt;</span>
+<span class="tok-tag">&lt;style&gt;</span>
+<span class="tok-at">@import</span>((*) from my-badge)
+<span class="tok-at">@badge-root</span>()
+<span class="tok-at">@badge</span>(.status-badge)
+.ok { <span class="tok-at">@badge-theme-success</span>() }
+<span class="tok-tag">&lt;/style&gt;</span>
+<span class="tok-tag">&lt;span</span> class=<span class="tok-str">"status-badge ok"</span><span class="tok-tag">&gt;</span>Live<span class="tok-tag">&lt;/span&gt;</span></pre>
+        </div>
+        <p>Ship that HTML in the repo. It’s the fastest way for others to verify the module without reading the whole README.</p>
+      </section>
+
+      <section class="t-step" id="pitfalls">
+        <div class="t-step-tag">08 · Watch-outs</div>
+        <h2>Pitfalls</h2>
+        <ul class="plain">
+          <li><strong>Forgetting <code>@use(param)</code></strong> — parameters only expand when referenced with <code>@use(...)</code>.</li>
+          <li><strong>Hard-coded selectors inside defines</strong> — always take <code>sel</code> (or similar) so the module isn’t tied to one class name.</li>
+          <li><strong>Unprefixed tokens</strong> — <code>--size</code> will clash; use <code>--badge-size</code>.</li>
+          <li><strong>Assuming auto-boot</strong> — with <code>esm.js</code> you must call <code>reboot()</code> / process yourself; <code>runtime.js</code> auto-scans the page.</li>
+          <li><strong>Loops and selectors</strong> — when using <code>@arr</code> / <code>rpt()</code>, isolate with <code>empty{ /* preserve */ }</code> so loop output doesn’t get treated as selectors (see nested-loop docs).</li>
+        </ul>
+      </section>
+
+      <section class="t-step" id="checklist">
+        <div class="t-step-tag">09 · Ship it</div>
+        <h2>Publish checklist</h2>
+        <ul class="check-list">
+          <li><span class="box" aria-hidden="true"></span><span><code>*-root</code> define with prefixed CSS variables</span></li>
+          <li><span class="box" aria-hidden="true"></span><span>Public helpers namespaced and listed in <code>package.json</code></span></li>
+          <li><span class="box" aria-hidden="true"></span><span>Selector parameters on structural defines</span></li>
+          <li><span class="box" aria-hidden="true"></span><span>README: install (runtime + CLI), minimal usage, token table</span></li>
+          <li><span class="box" aria-hidden="true"></span><span><code>samples/example.html</code> that runs on CDN runtime</span></li>
+          <li><span class="box" aria-hidden="true"></span><span>Honest <code>fscss_version</code> minimum</span></li>
+          <li><span class="box" aria-hidden="true"></span><span>MIT (or clear) license</span></li>
+        </ul>
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Reference implementations: <a href="https://github.com/Figsh/Circle-progress.fscss" target="_blank" rel="noopener" style="color:var(--accent-2);text-decoration:underline;">circle-progress.fscss</a> (ring · pie · steps) and the modules used in the <a href="tutorial" style="color:var(--accent-2);text-decoration:underline;">full site tutorial</a>.</p>
+        </div>
+      </section>
+
+      <div class="next-nav">
+        <a class="btn btn-ghost" href="tutorial">&larr; Full site tutorial</a>
+        <a class="btn btn-primary" href="/#modules">Browse modules</a>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS"> FSCSS Hub</a>
+        <p>A learning and build hub for FSCSS and its module ecosystem — part of the Figsh network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="/#syntax">Syntax primer</a></li>
+          <li><a href="/#modules">Modules</a></li>
+          <li><a href="tutorial">Full tutorial</a></li>
+          <li><a href="create-module">Create a module</a></li>
+          <li><a href="https://fscss.devtem.org/docs" target="_blank" rel="noopener">Full documentation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ecosystem</h4>
+        <ul>
+          <li><a href="https://devtem.org" target="_blank" rel="noopener">DevTemple</a></li>
+          <li><a href="https://fscss.devtem.org" target="_blank" rel="noopener">FSCSS Docs</a></li>
+          <li><a href="https://github.com/Figsh/Circle-progress.fscss" target="_blank" rel="noopener">circle-progress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/fscss-ttr" target="_blank" rel="noopener">GitHub org</a></li>
+          <li><a href="https://dev.to/fscss" target="_blank" rel="noopener">dev.to/fscss</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 FSCSS Hub. Part of the Figsh network. MIT licensed modules.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/global.js"></script>
+</body>
+</html>
