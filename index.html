@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem</title>
-  <meta name="description" content="A hands-on hub for learning FSCSS and its modules — st-core, form, circle-progress, customizable, and cube — and combining them into real interfaces.">
+  <meta name="description" content="Learn FSCSS, see it compile to real CSS, and try a few pure-CSS modules that power real UI — charts, icons, rings, forms.">
 
   <!-- SEO / Canonical -->
   <link rel="canonical" href="https://hub.devtem.org/">
@@ -173,10 +172,11 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="/" class="brand">
-      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.1</span>
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.4</span>
     </a>
 
     <nav class="nav-links" data-nav-links>
+      <a href="#notable">Useful packs</a>
       <a href="#syntax">Syntax</a>
       <a href="#modules">Modules</a>
       <a href="#combine">Build</a>
@@ -205,7 +205,7 @@
       <div data-reveal>
         <span class="eyebrow">Figured Shorthand CSS · Learning &amp; build hub</span>
         <h1>Write shorthand.<br>Ship <em>real CSS</em>.</h1>
-        <p class="lead">A hands-on home for the FSCSS ecosystem — the language itself, plus the modules built on top of it: charts, forms, progress rings, page shells, and 3D. Learn the syntax, then combine the modules into things that actually ship.</p>
+        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs that make pages feel finished - charts, icons, rings, forms. Learn the syntax, peek at a few useful modules, then build.</p>
 
         <div class="hero-cta">
           <a class="btn btn-primary" href="tutorial">Follow the full tutorial</a>
@@ -214,16 +214,16 @@
 
         <div class="install-line">
           <div class="code">
-            <pre><span class="tok-com">$</span> npm install fscss</pre>
+            <pre><span class="tok-com">$</span> npm install fscss@1.2.4</pre>
           </div>
           <button class="copy-btn" data-copy>copy</button>
         </div>
 
         <div class="hero-stats">
-          <div><b>10+</b><span>modules in the ecosystem</span></div>
-          <div><b>~10kb</b><span>CDN runtime</span></div>
-          <div><b>~0.5kb</b><span>compiled, per module</span></div>
-          <div><b>0</b><span>required JS runtime</span></div>
+          <div><b>1.2.4</b><span>language on npm / CDN</span></div>
+          <div><b>CLI or runtime</b><span>prototype, then ship plain CSS</span></div>
+          <div><b>Modules optional</b><span>only when a page needs them</span></div>
+          <div><b>0</b><span>required app JS for styles</span></div>
         </div>
       </div>
 
@@ -234,7 +234,7 @@
             <button data-tab="get">FSCSS compiles to</button>
           </div>
           <div class="demo-body">
-            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* NEW in v1.1.25 — pattern() */</span>
+            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* pattern() + @match — 1.2.4 */</span>
 <span class="tok-at">pattern</span>(<span class="tok-num">0.5</span>: <span class="tok-str">"Hello World card"</span>, `
   border-radius: <span class="tok-num">12px</span>;
   padding: <span class="tok-num">24px</span>;
@@ -255,7 +255,7 @@
   box-shadow: <span class="tok-num">0 8px 24px</span> rgba(0,0,0,.25);
 }</pre></div>
           </div>
-          <div class="demo-foot"><span class="dot"></span> pattern() since v1.1.25 · runtime.js / esm.js entry points in v1.2.x</div>
+          <div class="demo-foot"><span class="dot"></span> You write FSCSS → browser gets plain CSS · 1.2.4 runtime / esm / CLI</div>
         </div>
       </div>
     </div>
@@ -269,10 +269,45 @@
         <a href="https://devtem.org" target="_blank" rel="noopener"><span class="dot"></span>DevTemple</a>
         <a href="https://fscss.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>FSCSS Docs</a>
         <a href="https://design.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>devtemDesign</a>
-        <a href="https://invites.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>D Invites</a>
+        <a href="https://chart.devtem.org" target="_blank" rel="noopener"><span class="dot"></span>ProvChart</a>
       </div>
     </div>
   </div>
+
+
+
+  <!-- ====================== USEFUL PACKS (not a library index) =================== -->
+  <section class="section" id="notable" style="padding-bottom: 0;">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Useful on real pages</span>
+        <h2>A few modules that earn their import</h2>
+        <p>The hub is for learning FSCSS and seeing it in action. These packs are shortcuts when you want charts, icons, or rings without a JS UI kit. Browse the full set later on the <a href="https://fscss.devtem.org/libraries" target="_blank" rel="noopener" style="color:var(--accent-2);">libraries</a> docs if you need more.</p>
+      </div>
+      <div class="pillars">
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Charts</div>
+          <h3>st-core@v2</h3>
+          <p>Area and line charts from an <code class="mono">@arr</code> and CSS variables — no Chart.js. Prefer <strong>@v2</strong> for new work; classic <code class="mono">st-core.fscss</code> still works for older fixed-point demos.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Icons</div>
+          <h3>icon-mask.fscss</h3>
+          <p>Mask-based icons with size and color tokens — nav, toolbars, and buttons stay HTML-light and themeable with the rest of the page.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Rings &amp; intent</div>
+          <h3>circle-progress · pattern()</h3>
+          <p><strong>circle-progress</strong> for pies and steps. Language-level <strong>pattern()</strong> (and <code class="mono">@match</code> in 1.2.4) when you want to describe a control instead of only calling a mixin by name.</p>
+        </div>
+      </div>
+      <p data-reveal style="margin-top: 18px; font-size: 14px; color: var(--text-dim); max-width: 640px;">
+        Also handy: <code class="mono">form.fscss</code>, <code class="mono">customizable.fscss</code>, <code class="mono">cube.fscss</code> — same idea: import what the page needs, compile, ship CSS.
+        <a href="#modules" style="color:var(--accent-2);">See modules below</a> ·
+        <a href="tutorial" style="color:var(--accent-2);">Tutorial</a>
+      </p>
+    </div>
+  </section>
 
   <!-- ============================ WHAT IS ========================== -->
   <section class="section">
@@ -287,7 +322,7 @@
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Variables &amp; stores</div>
           <h3>Less repetition</h3>
-          <p>Define <code class="mono">$variables</code> once and reuse them anywhere. Group repeated declarations into a named <code class="mono">@fun</code> store and apply the whole block with one line.</p>
+          <p>Define arrays, <code class="mono">$variables</code> once and reuse them anywhere. Group repeated declarations into a named <code class="mono">@fun</code> store and apply the whole block with one line.</p>
         </div>
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Reusable blocks</div>
@@ -351,7 +386,7 @@
           <h4>@import — selective</h4>
           <p class="desc">Pull specific mixins from a module, or all of them.</p>
           <div class="code"><pre><span class="tok-at">@import</span>((page-hero, page-btn) from customizable)
-<span class="tok-at">@import</span>((*) from st-core)</pre></div>
+<span class="tok-at">@import</span>((*) from st-core@v2)</pre></div>
         </div>
 
         <div class="card primer-card" data-reveal>
@@ -402,7 +437,7 @@
             </div>
             <div class="code">
               <div class="code-head">import<button class="copy-btn" data-copy=".m-stcore">copy</button></div>
-              <pre class="m-stcore"><span class="tok-at">@import</span>((*) from st-core)
+              <pre class="m-stcore"><span class="tok-at">@import</span>((*) from st-core@v2)
 <span class="tok-at">@st-root</span>()
 <span class="tok-at">@st-chart-fill</span>(.chart-fill)
 <span class="tok-at">@st-chart-line</span>(.chart-line)</pre>
@@ -554,7 +589,7 @@
           <span class="pill live">Real build pattern</span>
           <ol>
             <li><b>01</b> <span><code class="mono">customizable.fscss</code> lays down the page shell — nav, container, token layer — so every other module inherits the same spacing and radius scale.</span></li>
-            <li><b>02</b> <span><code class="mono">st-core.fscss</code> renders the earnings-over-time chart and the stat card up top, fed by whatever your backend returns.</span></li>
+            <li><b>02</b> <span><code class="mono">st-core@v2</code> renders the earnings-over-time chart and the stat card up top, fed by whatever your backend returns.</span></li>
             <li><b>03</b> <span><code class="mono">circle-progress.fscss</code> shows progress toward the next payout threshold — one class name, no manual color logic.</span></li>
             <li><b>04</b> <span><code class="mono">form.fscss</code> handles the "Request withdrawal" form — floating label, validation state, submit button.</span></li>
             <li><b>05</b> <span><code class="mono">cube.fscss</code> adds a small rotating badge when a creator hits a milestone — a detail, not the centerpiece.</span></li>
@@ -563,7 +598,7 @@
           <div class="code" style="margin-top: 26px;">
             <div class="code-head">combined import<button class="copy-btn" data-copy=".m-combine">copy</button></div>
             <pre class="m-combine"><span class="tok-at">@import</span>((page-root, page-base) from customizable)
-<span class="tok-at">@import</span>((*) from st-core)
+<span class="tok-at">@import</span>((*) from st-core@v2)
 <span class="tok-at">@import</span>((*) from circle-progress)
 <span class="tok-at">@import</span>((form-root, form-group, form-input,
          form-label, form-float, form-btn-primary) from form)
@@ -573,7 +608,7 @@
 
           <div class="module-links" style="margin-top: 4px;">
             <a class="btn btn-primary btn-sm" href="tutorial">Follow the full tutorial</a>
-            <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/FSCSS/discussions" target="_blank" rel="noopener">Ask in Discussions</a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/Figsh/xfscss/discussions" target="_blank" rel="noopener">Ask in Discussions</a>
           </div>
         </div>
 
@@ -655,6 +690,22 @@
       <div class="resource-grid">
         <div class="card article-list" data-reveal>
           <div class="article-row">
+            <a class="title" href="https://github.com/fscss-ttr/st-core.fscss" target="_blank" rel="noopener">st-core@v2 — array-driven pure CSS charts (module)</a>
+            <span class="tag">st-core</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://hub.devtem.org/st-core.fscss/templates/admin-dashboard/" target="_blank" rel="noopener">Admin dashboard template — st-core + circle-progress + icon-mask</a>
+            <span class="tag">template</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/pattern" target="_blank" rel="noopener">pattern() &amp; @match — FSCSS 1.2.4 semantic styling</a>
+            <span class="tag">1.2.4</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://github.com/Figsh/xfscss/discussions" target="_blank" rel="noopener">Core Discussions (Figsh/xfscss) — questions &amp; ideas</a>
+            <span class="tag">community</span>
+          </div>
+          <div class="article-row">
             <a class="title" href="https://dev.to/fscss/fscss-v1125-pattern-is-here-5e5f" target="_blank" rel="noopener">FSCSS v1.1.25: pattern() is here — write what you mean</a>
             <span class="tag">new</span>
           </div>
@@ -706,11 +757,15 @@
             <span class="mono muted">&rarr;</span>
           </a>
           <a class="card link-card" href="https://fscss.devtem.org/pattern" target="_blank" rel="noopener">
-            <div><div class="l-name">pattern() docs</div><div class="l-desc">Semantic matching — new in v1.1.25</div></div>
+            <div><div class="l-name">pattern() docs</div><div class="l-desc">Semantic matching + @match (1.2.4)</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
-          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS" target="_blank" rel="noopener">
-            <div><div class="l-name">Core repo</div><div class="l-desc">github.com/fscss-ttr/FSCSS</div></div>
+          <a class="card link-card" href="https://github.com/Figsh/xfscss" target="_blank" rel="noopener">
+            <div><div class="l-name">Core repo</div><div class="l-desc">github.com/Figsh/xfscss</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://github.com/fscss-ttr" target="_blank" rel="noopener">
+            <div><div class="l-name">Modules org</div><div class="l-desc">github.com/fscss-ttr</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
           <a class="card link-card" href="https://www.npmjs.com/package/fscss" target="_blank" rel="noopener">
@@ -721,7 +776,7 @@
             <div><div class="l-name">jsDelivr CDN</div><div class="l-desc">cdn.jsdelivr.net/npm/fscss</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
-          <a class="card link-card" href="https://github.com/fscss-ttr/FSCSS/discussions" target="_blank" rel="noopener">
+          <a class="card link-card" href="https://github.com/Figsh/xfscss/discussions" target="_blank" rel="noopener">
             <div><div class="l-name">Discussions</div><div class="l-desc">ask questions, share builds</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
