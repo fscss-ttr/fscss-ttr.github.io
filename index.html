@@ -36,6 +36,10 @@
   <link rel="stylesheet" href="assets/css/global.css">
 <style>
   /* ---- Page-specific styles for index.html ---------------------------- */
+  body, html{
+    overflow-x: hidden !important;
+    width: 100%;
+  }
 
   /* Hero */
   .hero{ position: relative; padding: clamp(56px,9vw,96px) 0 clamp(40px,6vw,64px); overflow: hidden; }
@@ -172,11 +176,12 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="/" class="brand">
-      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.4</span>
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.5</span>
     </a>
 
     <nav class="nav-links" data-nav-links>
       <a href="#notable">Useful packs</a>
+      <a href="#shorthands">Shorthands</a>
       <a href="#syntax">Syntax</a>
       <a href="#modules">Modules</a>
       <a href="#combine">Build</a>
@@ -205,7 +210,7 @@
       <div data-reveal>
         <span class="eyebrow">Figured Shorthand CSS · Learning &amp; build hub</span>
         <h1>Write shorthand.<br>Ship <em>real CSS</em>.</h1>
-        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs that make pages feel finished - charts, icons, rings, forms. Learn the syntax, peek at a few useful modules, then build.</p>
+        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs that make pages feel finished — charts, icons, rings, forms. <strong>1.2.5</strong> adds axis and property shorthands (<code class="mono">mx</code>, <code class="mono">px</code>, <code class="mono">stack</code>, <code class="mono">rounded</code>, …). Learn the syntax, peek at a few useful modules, then build.</p>
 
         <div class="hero-cta">
           <a class="btn btn-primary" href="tutorial">Follow the full tutorial</a>
@@ -214,13 +219,13 @@
 
         <div class="install-line">
           <div class="code">
-            <pre><span class="tok-com">$</span> npm install fscss@1.2.4</pre>
+            <pre><span class="tok-com">$</span> npm install fscss@1.2.5</pre>
           </div>
           <button class="copy-btn" data-copy>copy</button>
         </div>
 
         <div class="hero-stats">
-          <div><b>1.2.4</b><span>language on npm / CDN</span></div>
+          <div><b>1.2.5</b><span>language on npm / CDN</span></div>
           <div><b>CLI or runtime</b><span>prototype, then ship plain CSS</span></div>
           <div><b>Modules optional</b><span>only when a page needs them</span></div>
           <div><b>0</b><span>required app JS for styles</span></div>
@@ -234,7 +239,7 @@
             <button data-tab="get">FSCSS compiles to</button>
           </div>
           <div class="demo-body">
-            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* pattern() + @match — 1.2.4 */</span>
+            <div class="demo-pane is-active" data-pane="write"><pre style="margin:0; white-space:pre-wrap;"><span class="tok-com">/* pattern() + @match · shorthands in 1.2.5 */</span>
 <span class="tok-at">pattern</span>(<span class="tok-num">0.5</span>: <span class="tok-str">"Hello World card"</span>, `
   border-radius: <span class="tok-num">12px</span>;
   padding: <span class="tok-num">24px</span>;
@@ -255,7 +260,7 @@
   box-shadow: <span class="tok-num">0 8px 24px</span> rgba(0,0,0,.25);
 }</pre></div>
           </div>
-          <div class="demo-foot"><span class="dot"></span> You write FSCSS → browser gets plain CSS · 1.2.4 runtime / esm / CLI</div>
+          <div class="demo-foot"><span class="dot"></span> You write FSCSS → browser gets plain CSS · 1.2.5 runtime / esm / CLI · axis & property shorthands</div>
         </div>
       </div>
     </div>
@@ -305,6 +310,50 @@
         Also handy: <code class="mono">form.fscss</code>, <code class="mono">customizable.fscss</code>, <code class="mono">cube.fscss</code> — same idea: import what the page needs, compile, ship CSS.
         <a href="#modules" style="color:var(--accent-2);">See modules below</a> ·
         <a href="tutorial" style="color:var(--accent-2);">Tutorial</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ====================== 1.2.5 SHORTHANDS =================== -->
+  <section class="section" id="shorthands" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">New in FSCSS 1.2.5</span>
+        <h2>Axis, aliases, and layout helpers</h2>
+        <p>Less typing, same plain CSS output. Spacing axes, size shortcuts, border and radius sugar, background helpers, and one-liners like <code class="mono">stack</code>, <code class="mono">center</code>, and <code class="mono">auto-fit</code>. Full list and every expansion rule: <a href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener" style="color:var(--accent-2);">fscss.devtem.org/shorthands</a>.</p>
+      </div>
+      <div class="pillars">
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Axis &amp; size</div>
+          <h3>mx · px · size · w/h</h3>
+          <p><code class="mono">mx: 1rem</code> → left/right margin. <code class="mono">px</code>/<code class="mono">py</code>, <code class="mono">inset-x</code>/<code class="mono">inset-y</code>, <code class="mono">gap-x</code>/<code class="mono">gap-y</code>, <code class="mono">size</code>, <code class="mono">min-w</code>, safe-area helpers.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Aliases &amp; helpers</div>
+          <h3>stack · center · cols</h3>
+          <p>Short props (<code class="mono">fs</code>, <code class="mono">jc</code>, <code class="mono">pos</code>, …) plus layout recipes: <code class="mono">stack</code>, <code class="mono">hstack</code>, <code class="mono">center</code>, <code class="mono">truncate</code>, <code class="mono">auto-fit</code>, <code class="mono">glass</code>, <code class="mono">ring</code>.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Border &amp; background</div>
+          <h3>rounded · bg · border-x</h3>
+          <p>Side and corner radius, full <code class="mono">border-x</code>/<code class="mono">border-y</code>, <code class="mono">bw-*</code>/<code class="mono">bc-*</code>, and <code class="mono">bg</code> / <code class="mono">bg-x</code> helpers. Side blocks: <code class="mono">top| padding: 8px; |</code>.</p>
+        </div>
+      </div>
+      <div class="code" data-reveal style="margin-top: 20px; max-width: 520px;">
+        <div class="code-head">1.2.5 example<button class="copy-btn" data-copy=".s125">copy</button></div>
+        <pre class="s125"><span class="tok-com">/* expands to standard CSS */</span>
+.card {
+  stack: 12px;
+  px: 16px;
+  rounded: 12px;
+  bg: #12121a;
+  border-x: 1px solid rgba(255,255,255,.08);
+}</pre>
+      </div>
+      <p data-reveal style="margin-top: 14px; font-size: 14px; color: var(--text-dim);">
+        Install: <code class="mono">npm install fscss@1.2.5</code> · CDN: <code class="mono">cdn.jsdelivr.net/npm/fscss@1.2.5/runtime.min.js</code> ·
+        <a href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener" style="color:var(--accent-2);">Full shorthand reference →</a>
       </p>
     </div>
   </section>
@@ -698,6 +747,14 @@
             <span class="tag">template</span>
           </div>
           <div class="article-row">
+            <a class="title" href="https://hub.devtem.org/st-core.fscss/templates/budget-app/" target="_blank" rel="noopener">FIGSHBudget template — pure CSS dual-phone UI</a>
+            <span class="tag">template</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener">FSCSS 1.2.5 shorthands — full list and expansions</a>
+            <span class="tag">1.2.5</span>
+          </div>
+          <div class="article-row">
             <a class="title" href="https://fscss.devtem.org/pattern" target="_blank" rel="noopener">pattern() &amp; @match — FSCSS 1.2.4 semantic styling</a>
             <span class="tag">1.2.4</span>
           </div>
@@ -758,6 +815,10 @@
           </a>
           <a class="card link-card" href="https://fscss.devtem.org/pattern" target="_blank" rel="noopener">
             <div><div class="l-name">pattern() docs</div><div class="l-desc">Semantic matching + @match (1.2.4)</div></div>
+            <span class="mono muted">&rarr;</span>
+          </a>
+          <a class="card link-card" href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener">
+            <div><div class="l-name">Shorthands</div><div class="l-desc">Axis, aliases, helpers — 1.2.5</div></div>
             <span class="mono muted">&rarr;</span>
           </a>
           <a class="card link-card" href="https://github.com/Figsh/xfscss" target="_blank" rel="noopener">
