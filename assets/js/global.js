@@ -173,5 +173,5 @@
 
 const footerbottom = document.querySelector(".footer-bottom");
 if(footerbottom){
-  footerbottom.querySelector("p").innerHTML = `&copy; ${new Date().getFullYear()} FSCSS Hub. Part of the Figsh network. MIT licensed modules.`;
+  footerbottom.querySelector("p").innerHTML = `&copy; ${new Date().getFullYear()} FSCSS Hub. Open-source software. MIT licensed modules.`;
   }
