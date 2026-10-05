@@ -307,7 +307,7 @@
         </div>
       </div>
       <p data-reveal style="margin-top: 18px; font-size: 14px; color: var(--text-dim); max-width: 640px;">
-        Also handy: <code class="mono">form.fscss</code>, <code class="mono">customizable.fscss</code>, <code class="mono">cube.fscss</code> — same idea: import what the page needs, compile, ship CSS.
+        Also handy: <code class="mono">overlapui.fscss</code>, <code class="mono">form.fscss</code>, <code class="mono">customizable.fscss</code>, <code class="mono">cube.fscss</code> — same idea: import what the page needs, compile, ship CSS.
         <a href="#modules" style="color:var(--accent-2);">See modules below</a> ·
         <a href="tutorial" style="color:var(--accent-2);">Tutorial</a>
       </p>
@@ -464,7 +464,7 @@
     <div class="wrap">
       <div class="section-head" data-reveal>
         <span class="eyebrow">The module ecosystem</span>
-        <h2>Top-Five modules around the philosophy</h2>
+        <h2>Top-Six modules around the philosophy</h2>
         <p>Each module solves one hard visual problem in pure CSS — data lives in custom properties, shape lives in <code class="mono">clip-path</code>, gradients, and transforms. JavaScript, where it appears at all, only ever writes a variable.</p>
       </div>
 
@@ -590,6 +590,41 @@
           </div>
         </article>
 
+
+        <!-- overlapui -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">overlapui.fscss</div>
+            <h3>Stacks that overlap at rest and open on hover</h3>
+            <p class="desc">Avatar rows, notification cards, tilted image strips, and radial <strong>circle</strong> menus — pure CSS, driven by <code class="mono">--ou-*</code> tokens. No JS for the open/close motion. Letter faces map from <code class="mono">data-alph</code> via FSCSS arrays.</p>
+            <div class="module-mixins">
+              <span class="pill">@ou-root</span>
+              <span class="pill">@avatar-overlap</span>
+              <span class="pill">@card-overlap</span>
+              <span class="pill">@img-overlap</span>
+              <span class="pill">@circle-overlap</span>
+              <span class="pill">@overlapui</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-overlapui">copy</button></div>
+              <pre class="m-overlapui"><span class="tok-at">@import</span>((*) from overlapui)
+<span class="tok-at">@overlapui</span>()
+
+<span class="tok-com">/* optional */</span>
+:root {
+  <span class="tok-at">@ou-circle-size</span>(48px, 80px)
+}</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/overlapui.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/overlapui.fscss/blob/main/README.md" target="_blank" rel="noopener">README</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://raw.githubusercontent.com/fscss-ttr/overlapui.fscss/main/preview.jpg" alt="overlapui.fscss avatar and circle stack" loading="lazy" decoding="async" onerror="this.style.display='none'; this.parentElement.style.minHeight='200px'; this.parentElement.style.background='var(--surface-2)'">
+          </div>
+        </article>
+
         <!-- cube -->
         <article class="module" data-reveal>
           <div class="module-info">
@@ -629,7 +664,7 @@
     <div class="wrap">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Combining modules</span>
-        <h2>Building something real, not five separate demos</h2>
+        <h2>Building something real, not six separate demos</h2>
         <p>Every module reads its own tokens and stays out of the others' way, so nothing stops them sharing one page. Here's what a real interface looks like once they're stacked together — a creator dashboard: st-core renders the earnings chart, circle-progress tracks a payout goal, form.fscss handles the withdrawal request, customizable.fscss provides the page shell, and a small cube.fscss badge marks a milestone. The full walkthrough, file by file, is in the <a href="tutorial.html" style="color:var(--accent-2); text-decoration: underline;">tutorial</a>.</p>
       </div>
 
@@ -738,6 +773,10 @@
 
       <div class="resource-grid">
         <div class="card article-list" data-reveal>
+          <div class="article-row">
+            <a class="title" href="https://github.com/fscss-ttr/overlapui.fscss" target="_blank" rel="noopener">overlapui.fscss — avatar, card, image &amp; circle stacks (pure CSS)</a>
+            <span class="tag">overlapui</span>
+          </div>
           <div class="article-row">
             <a class="title" href="https://github.com/fscss-ttr/st-core.fscss" target="_blank" rel="noopener">st-core@v2 — array-driven pure CSS charts (module)</a>
             <span class="tag">st-core</span>
