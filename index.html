@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem</title>
-  <meta name="description" content="Learn FSCSS, see it compile to real CSS, and try a few pure-CSS modules that power real UI — charts, icons, rings, forms.">
+  <title>FSCSS Hub — Learn FSCSS, modules, IDE &amp; build real UI</title>
+  <meta name="description" content="Hands-on hub for FSCSS: syntax, shorthands, useful modules (st-core, overlapui, circle-progress, customizable), browser IDE with libck/xfcmd package automation, tutorials and templates. Compile to plain CSS.">
 
   <!-- SEO / Canonical -->
   <link rel="canonical" href="https://hub.devtem.org/">
@@ -12,8 +12,8 @@
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph (social sharing) -->
-  <meta property="og:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
-  <meta property="og:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
+  <meta property="og:title" content="FSCSS Hub — Learn FSCSS, modules, IDE & build real UI">
+  <meta property="og:description" content="Learn FSCSS syntax and modules, open the browser IDE, enable packs with libck/xfcmd, and ship plain CSS. Charts, forms, rings, page shells.">
   <meta property="og:url" content="https://hub.devtem.org/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
@@ -23,8 +23,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FSCSS Hub — Learn, combine, and ship with the FSCSS ecosystem">
-  <meta name="twitter:description" content="A hands-on hub for learning FSCSS and its modules — charts, forms, progress rings, page shells, and 3D.">
+  <meta name="twitter:title" content="FSCSS Hub — Learn FSCSS, modules, IDE & build real UI">
+  <meta name="twitter:description" content="Learn FSCSS syntax and modules, open the browser IDE, enable packs with libck/xfcmd, and ship plain CSS. Charts, forms, rings, page shells.">
   <meta name="twitter:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
 
   <!-- Favicon & fonts -->
@@ -176,7 +176,7 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="/" class="brand">
-      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.5</span>
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.6</span>
     </a>
 
     <nav class="nav-links" data-nav-links>
@@ -185,10 +185,9 @@
       <a href="#syntax">Syntax</a>
       <a href="#modules">Modules</a>
       <a href="#combine">Build</a>
+      <a href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">IDE</a>
       <a href="tutorial">Tutorial</a>
       <a href="create-module">Create module</a>
-      <a href="#ecosystem">Ecosystem</a>
-      <a href="#resources">Resources</a>
     </nav>
 
     <div class="nav-actions">
@@ -210,24 +209,25 @@
       <div data-reveal>
         <span class="eyebrow">Figured Shorthand CSS · Learning &amp; build hub</span>
         <h1>Write shorthand.<br>Ship <em>real CSS</em>.</h1>
-        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs that make pages feel finished — charts, icons, rings, forms. <strong>1.2.5</strong> adds axis and property shorthands (<code class="mono">mx</code>, <code class="mono">px</code>, <code class="mono">stack</code>, <code class="mono">rounded</code>, …). Learn the syntax, peek at a few useful modules, then build.</p>
+        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs — charts, icons, rings, forms, overlap stacks. Use the <a href="https://fscss.devtem.org/ide" style="color:var(--accent-2)">browser IDE</a> for multi-file work and <code class="mono">libck</code> / <code class="mono">xfcmd</code> package setup, or the CDN/CLI for pages. <strong>1.2.6+</strong> tightens imports and IDE automation; <strong>1.2.5+</strong> shipped axis &amp; property shorthands (<code class="mono">mx</code>, <code class="mono">px</code>, <code class="mono">stack</code>, <code class="mono">rounded</code>, …).</p>
 
         <div class="hero-cta">
-          <a class="btn btn-primary" href="tutorial">Follow the full tutorial</a>
+          <a class="btn btn-primary" href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">Open the FSCSS IDE</a>
+          <a class="btn btn-ghost" href="tutorial">Full tutorial</a>
           <a class="btn btn-ghost" href="#modules">Browse modules</a>
         </div>
 
         <div class="install-line">
           <div class="code">
-            <pre><span class="tok-com">$</span> npm install fscss@1.2.5</pre>
+            <pre><span class="tok-com">$</span> npm install <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c2d7c7d7d7e4958a968a91">[email&#160;protected]</a></pre>
           </div>
           <button class="copy-btn" data-copy>copy</button>
         </div>
 
         <div class="hero-stats">
-          <div><b>1.2.5</b><span>language on npm / CDN</span></div>
-          <div><b>CLI or runtime</b><span>prototype, then ship plain CSS</span></div>
-          <div><b>Modules optional</b><span>only when a page needs them</span></div>
+          <div><b>1.2.6+</b><span>language on npm / CDN / IDE</span></div>
+          <div><b>IDE + CLI</b><span>prototype, then ship plain CSS</span></div>
+          <div><b>libck / xfcmd</b><span>enable packs in one prompt</span></div>
           <div><b>0</b><span>required app JS for styles</span></div>
         </div>
       </div>
@@ -260,7 +260,7 @@
   box-shadow: <span class="tok-num">0 8px 24px</span> rgba(0,0,0,.25);
 }</pre></div>
           </div>
-          <div class="demo-foot"><span class="dot"></span> You write FSCSS → browser gets plain CSS · 1.2.5 runtime / esm / CLI · axis & property shorthands</div>
+          <div class="demo-foot"><span class="dot"></span> You write FSCSS → browser gets plain CSS · 1.2.6 runtime / esm / CLI · IDE packages via libck</div>
         </div>
       </div>
     </div>
@@ -281,6 +281,49 @@
 
 
 
+
+  <!-- ====================== TRY IN THE IDE =================== -->
+  <section class="section" id="ide" style="padding-top: 40px; padding-bottom: 20px;">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Browser workspace</span>
+        <h2>FSCSS IDE — edit, compile, enable packs</h2>
+        <p>Multi-file project, live CSS, preview, and terminal automation. Enable a module without pasting README setup by hand.</p>
+      </div>
+      <div class="pillars">
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Workspace</div>
+          <h3>Multi-file + local @import</h3>
+          <p>Virtual FS, selective aliases, registry names (<code class="mono">st-core@v2</code>, <code class="mono">overlapui</code>, <code class="mono">fscss:micros</code>), remote URLs.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Terminal</div>
+          <h3>libs · libck · libon · xfcmd</h3>
+          <p>Check a package, type <code class="mono">yes</code>, get snippets + a demo folder. Scripts live in each module’s <code class="mono">xfcmds/</code>.</p>
+        </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">Ship</div>
+          <h3>Export or CLI</h3>
+          <p>Export CSS / ZIP from the IDE, or <code class="mono">fscss in.fscss out.css</code> for production with zero runtime.</p>
+        </div>
+      </div>
+      <div class="code" style="margin-top: 20px;" data-reveal>
+        <div class="code-head">IDE terminal<button class="copy-btn" data-copy=".m-ide">copy</button></div>
+        <pre class="m-ide"><span class="tok-com"># in https://fscss.devtem.org/ide  →  Ctrl+`</span>
+libck st-core
+yes
+libck overlapui
+yes
+xfcmd list</pre>
+      </div>
+      <div class="hero-cta" style="margin-top: 18px;" data-reveal>
+        <a class="btn btn-primary" href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">Open IDE</a>
+        <a class="btn btn-ghost btn-sm" href="https://fscss.devtem.org/ide-guide" target="_blank" rel="noopener">IDE guide</a>
+        <a class="btn btn-ghost btn-sm" href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">xfcmds guide</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ====================== USEFUL PACKS (not a library index) =================== -->
   <section class="section" id="notable" style="padding-bottom: 0;">
     <div class="wrap">
@@ -293,21 +336,21 @@
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Charts</div>
           <h3>st-core@v2</h3>
-          <p>Area and line charts from an <code class="mono">@arr</code> and CSS variables — no Chart.js. Prefer <strong>@v2</strong> for new work; classic <code class="mono">st-core.fscss</code> still works for older fixed-point demos.</p>
+          <p>Area and line charts from an <code class="mono">@arr</code> and CSS variables — no Chart.js. Prefer <strong>@v2</strong> for new work. In the IDE: <code class="mono">libck st-core</code> · import <code class="mono">@import((*) from st-core@v2)</code>.</p>
         </div>
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Icons</div>
           <h3>icon-mask.fscss</h3>
-          <p>Mask-based icons with size and color tokens — nav, toolbars, and buttons stay HTML-light and themeable with the rest of the page.</p>
+          <p>Mask-based icons with size and color tokens — nav, toolbars, and buttons stay HTML-light. IDE: <code class="mono">libck icon-mask</code> · <code class="mono">@import((*) from icon-mask)</code>.</p>
         </div>
         <div class="card pillar" data-reveal>
           <div class="pillar-num">Rings &amp; intent</div>
           <h3>circle-progress · pattern()</h3>
-          <p><strong>circle-progress</strong> for pies and steps. Language-level <strong>pattern()</strong> (and <code class="mono">@match</code> in 1.2.4) when you want to describe a control instead of only calling a mixin by name.</p>
+          <p><strong>circle-progress</strong> for pies and steps (<code class="mono">libck circle-progress</code>). Language-level <strong>pattern()</strong> (and <code class="mono">@match</code>) when you describe a control instead of only calling a mixin by name.</p>
         </div>
       </div>
       <p data-reveal style="margin-top: 18px; font-size: 14px; color: var(--text-dim); max-width: 640px;">
-        Also handy: <code class="mono">overlapui.fscss</code>, <code class="mono">form.fscss</code>, <code class="mono">customizable.fscss</code>, <code class="mono">cube.fscss</code> — same idea: import what the page needs, compile, ship CSS.
+        Also handy: <code class="mono">overlapui</code> (<code class="mono">libck overlapui</code>), <code class="mono">form</code>, <code class="mono">customizable</code>, <code class="mono">cube</code>, <code class="mono">fscss:micros</code> — same idea: enable in the IDE or import by registry name, compile, ship CSS.
         <a href="#modules" style="color:var(--accent-2);">See modules below</a> ·
         <a href="tutorial" style="color:var(--accent-2);">Tutorial</a>
       </p>
@@ -352,7 +395,7 @@
 }</pre>
       </div>
       <p data-reveal style="margin-top: 14px; font-size: 14px; color: var(--text-dim);">
-        Install: <code class="mono">npm install fscss@1.2.5</code> · CDN: <code class="mono">cdn.jsdelivr.net/npm/fscss@1.2.5/runtime.min.js</code> ·
+        Install: <code class="mono">npm install <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771104140404374659455942">[email&#160;protected]</a></code> · CDN: <code class="mono">cdn.jsdelivr.net/npm/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a1b4a4b4b487f6e9f5e9f2">[email&#160;protected]</a>/runtime.min.js</code> ·
         <a href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener" style="color:var(--accent-2);">Full shorthand reference →</a>
       </p>
     </div>
@@ -773,7 +816,31 @@
 
       <div class="resource-grid">
         <div class="card article-list" data-reveal>
+                    <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">FSCSS IDE — multi-file editor, compile, preview, packages</a>
+            <span class="tag">IDE</span>
+          </div>
           <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/ide-guide" target="_blank" rel="noopener">IDE guide — layout, shortcuts, export</a>
+            <span class="tag">guide</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">xfcmds — libck, libon, .xfcmd package scripts</a>
+            <span class="tag">xfcmd</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://fscss.devtem.org/libraries" target="_blank" rel="noopener">Libraries registry — import by name</a>
+            <span class="tag">libs</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://github.com/fscss-ttr/micros.fscss" target="_blank" rel="noopener">fscss:micros — mirror, stagger, alpha, scoped-reset</a>
+            <span class="tag">micros</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://github.com/fscss-ttr/patterns.fscss" target="_blank" rel="noopener">patterns.fscss — style by plain English</a>
+            <span class="tag">pattern</span>
+          </div>
+<div class="article-row">
             <a class="title" href="https://github.com/fscss-ttr/overlapui.fscss" target="_blank" rel="noopener">overlapui.fscss — avatar, card, image &amp; circle stacks (pure CSS)</a>
             <span class="tag">overlapui</span>
           </div>
@@ -844,6 +911,14 @@
         </div>
 
         <div class="resource-side" data-reveal>
+          <a class="card link-card" href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">
+            <div><div class="l-name">FSCSS IDE</div><div class="l-desc">fscss.devtem.org/ide</div></div>
+            <span class="mono muted">→</span>
+          </a>
+          <a class="card link-card" href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">
+            <div><div class="l-name">xfcmds guide</div><div class="l-desc">package enable automation</div></div>
+            <span class="mono muted">→</span>
+          </a>
           <a class="card link-card" href="tutorial.html">
             <div><div class="l-name">Full tutorial</div><div class="l-desc">build a complete site, step by step</div></div>
             <span class="mono muted">&rarr;</span>
@@ -889,11 +964,12 @@
   <section class="section" style="padding-top: 0;">
     <div class="wrap">
       <div class="final-cta" data-reveal>
-        <h2>Install it, import a module, build something real</h2>
-        <p>Start with the CDN runtime for prototyping, then compile to plain CSS when you're ready to ship.</p>
+        <h2>Open the IDE, enable a pack, or compile to plain CSS</h2>
+        <p>Prototype with the browser IDE and <code class="mono">libck</code>, or install <code class="mono">fscss@1.2.6</code> and ship CLI output.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="tutorial.html">Follow the full tutorial</a>
-          <a class="btn btn-ghost" href="https://fscss.devtem.org/libraries">Browse the modules</a>
+          <a class="btn btn-primary" href="https://fscss.devtem.org/ide">Open the IDE</a>
+          <a class="btn btn-ghost" href="tutorial.html">Full tutorial</a>
+          <a class="btn btn-ghost" href="https://fscss.devtem.org/libraries">Libraries</a>
           <a class="btn btn-ghost" href="create-module">Create a module</a>
         </div>
       </div>
@@ -940,7 +1016,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 FSCSS Hub. MIT licensed modules.</p>
+      <p>&copy; 2026 FSCSS Hub. Part of the Figsh network. MIT licensed modules.</p>
       <div class="footer-social">
         <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.4 7.86 10.94.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55A10.5 10.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg></a>
         <a href="https://dev.to/fscss" target="_blank" rel="noopener" aria-label="dev.to"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm3.4 5.1c-.3-.2-.7-.3-1.2-.3H4.7v8.4h1.6c.5 0 .9-.1 1.2-.3.9-.5 1.4-1.6 1.4-3.9 0-2.3-.5-3.4-1.4-3.9zm-.4 6.5c-.1.1-.4.2-.7.2h-.2v-5.4h.2c.3 0 .6.1.7.2.4.3.6 1.1.6 2.5 0 1.4-.2 2.2-.6 2.5zm5.6-6.8H9.9v8.4h2.7v-1.6h-1.3v-1.7h1.1v-1.5h-1.1v-1.9h1.3zm5.9 0h-1.6l-1 4.6-1-4.6h-1.7l2 8.4h1.4z"/></svg></a>
@@ -949,7 +1025,7 @@
   </div>
 </footer>
 
-<script src="assets/js/global.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/global.js"></script>
 <script>
   // Hero demo tab switcher (page-specific, small enough to keep inline)
   (function () {
@@ -965,5 +1041,6 @@
     });
   })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4d2fedfaa00a8c2',t:'MTc5MjQ0NjU5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
