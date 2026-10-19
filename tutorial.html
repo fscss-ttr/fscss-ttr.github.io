@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Real project setup with FSCSS — Full Tutorial | FSCSS Hub</title>
-<meta name="description" content="Set up a real FSCSS project: CLI and runtime, native syntax, st-core@v2 admin template, icon-mask, circle-progress, forms — plus tips for Svelte, React, and Next.">
+<meta name="description" content="Set up a real FSCSS project: CLI, runtime, or browser IDE with libck/xfcmd; native syntax; st-core@v2 admin template, icon-mask, circle-progress — plus Svelte, React, and Next tips.">
 <link rel="canonical" href="https://hub.devtem.org/tutorial">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Real project setup with FSCSS — Full Tutorial">
-<meta property="og:description" content="Project layout, native FSCSS features, st-core@v2 dashboard template, icon-mask, and framework integration tips.">
+<meta property="og:description" content="CLI, runtime, or browser IDE with libck/xfcmd; native FSCSS; st-core@v2 template, icon-mask, circle-progress; framework tips.">
 <meta property="og:url" content="https://hub.devtem.org/tutorial">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://hub.devtem.org/assets/images/og-image.jpg">
@@ -80,13 +80,14 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="/" class="brand">
-      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.4</span>
+      <img src="https://fscss.devtem.org/assets/images/fscss.png" alt="FSCSS">Hub <span class="v">v1.2.6</span>
     </a>
     <nav class="nav-links" data-nav-links>
       <a href="/#syntax">Syntax</a>
       <a href="/#notable">Useful packs</a>
       <a href="/#modules">Modules</a>
       <a href="/#combine">Build</a>
+      <a href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">IDE</a>
       <a href="tutorial" class="is-active">Tutorial</a>
       <a href="create-module">Create module</a>
       <a href="/#resources">Resources</a>
@@ -108,11 +109,11 @@
     <div class="wrap">
       <span class="eyebrow">Full tutorial · real project setup</span>
       <h1>From empty folder to a working FSCSS site</h1>
-      <p class="lead">Set up the language, use native FSCSS features, then power a real UI with <strong>st-core@v2</strong>, <strong>icon-mask</strong>, and <strong>circle-progress</strong> — the same stack as the <a href="https://hub.devtem.org/st-core.fscss/templates/admin-dashboard/" style="color:var(--accent-2);">admin dashboard template</a>. Optional form shell and framework tips when you leave plain HTML.</p>
+      <p class="lead">Set up the language (CLI, runtime, or the <a href="https://fscss.devtem.org/ide" style="color:var(--accent-2)">browser IDE</a>), use native FSCSS features, then power a real UI with <strong>st-core@v2</strong>, <strong>icon-mask</strong>, and <strong>circle-progress</strong> — the same stack as the <a href="https://hub.devtem.org/st-core.fscss/templates/admin-dashboard/" style="color:var(--accent-2);">admin dashboard template</a>. Optional form shell, package enable via <code class="mono">libck</code>, and framework tips when you leave plain HTML.</p>
       <div class="t-meta">
-        <span class="pill">~20 min</span>
-        <span class="pill">FSCSS 1.2.4+</span>
-        <span class="pill">Native + modules</span>
+        <span class="pill">~25 min</span>
+        <span class="pill">FSCSS 1.2.6+</span>
+        <span class="pill">IDE · CLI · runtime</span>
         <span class="pill live">Template-backed demo</span>
       </div>
     </div>
@@ -125,6 +126,7 @@
       <ol>
         <li><a href="#goal">Goal</a></li>
         <li><a href="#setup">Install &amp; run</a></li>
+        <li><a href="#ide">IDE path (optional)</a></li>
         <li><a href="#structure">Project structure</a></li>
         <li><a href="#native">Native FSCSS first</a></li>
         <li><a href="#imports">Imports</a></li>
@@ -159,21 +161,45 @@
         <h3>Option A — Runtime (learn / prototype)</h3>
         <div class="code">
           <div class="code-head">html<button class="copy-btn" data-copy=".s-cdn">copy</button></div>
-          <pre class="s-cdn"><span class="tok-tag">&lt;script</span> src=<span class="tok-str">"https://cdn.jsdelivr.net/npm/fscss@1.2.4/runtime.min.js"</span> defer<span class="tok-tag">&gt;&lt;/script&gt;</span>
+          <pre class="s-cdn"><span class="tok-tag">&lt;script</span> src=<span class="tok-str">"https://cdn.jsdelivr.net/npm/fscss@1.2.6/runtime.min.js"</span> defer<span class="tok-tag">&gt;&lt;/script&gt;</span>
 <span class="tok-tag">&lt;link</span> type=<span class="tok-str">"text/fscss"</span> href=<span class="tok-str">"src/site.fscss"</span><span class="tok-tag">&gt;</span></pre>
         </div>
 
         <h3>Option B — CLI (production)</h3>
         <div class="code">
           <div class="code-head">bash<button class="copy-btn" data-copy=".s-cli">copy</button></div>
-          <pre class="s-cli">npm install -g fscss@1.2.4
+          <pre class="s-cli">npm install -g fscss@1.2.6
 fscss src/site.fscss dist/site.css</pre>
         </div>
 
         <div class="capgrid">
           <div class="card cap-card"><div class="cap-label">Engine</div><div class="cap-value">Figsh/xfscss</div></div>
-          <div class="card cap-card"><div class="cap-label">npm</div><div class="cap-value">fscss@1.2.4</div></div>
-          <div class="card cap-card"><div class="cap-label">Editor</div><div class="cap-value">Figsh.fscss VS Code</div></div>
+          <div class="card cap-card"><div class="cap-label">npm</div><div class="cap-value">fscss@1.2.6</div></div>
+          <div class="card cap-card"><div class="cap-label">IDE</div><div class="cap-value">fscss.devtem.org/ide</div></div>
+        </div>
+      </section>
+
+      <section class="t-step" id="ide">
+        <div class="t-step-tag">01b · IDE path</div>
+        <h2>Skip the empty folder — enable packs in the browser</h2>
+        <p>If you want a multi-file workspace and one-command module setup before you touch <code>git clone</code>:</p>
+        <ol class="plain">
+          <li>Open <a href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">fscss.devtem.org/ide</a></li>
+          <li>Terminal (<code>Ctrl+`</code>): <code>libck st-core</code> → type <code>yes</code></li>
+          <li>Same for <code>circle-progress</code>, <code>icon-mask</code>, or <code>overlapui</code> when the package ships <code>xfcmds/enable.xfcmd</code></li>
+          <li>Use snippets, edit the generated demo, export CSS/ZIP when ready</li>
+        </ol>
+        <div class="code">
+          <div class="code-head">IDE terminal<button class="copy-btn" data-copy=".s-ide">copy</button></div>
+          <pre class="s-ide">libck st-core
+yes
+libck circle-progress
+yes
+xfcmd list</pre>
+        </div>
+        <div class="note-box">
+          <span class="dot"></span>
+          <p>Guides: <a href="https://fscss.devtem.org/ide-guide" target="_blank" rel="noopener">IDE</a> · <a href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">xfcmds</a>. Production still ships <strong>compiled CSS</strong> (CLI or Export), not the runtime.</p>
         </div>
       </section>
 
@@ -238,7 +264,7 @@ $surface: #12131a;
 body { background: <span class="tok-at">@event</span>.theme(dark); }</pre>
         </div>
 
-        <h3>pattern() (1.2.4)</h3>
+        <h3>pattern() (1.2.4+)</h3>
         <div class="code">
           <pre>pattern(0.6: "soft elevated card", `
   background: var(--surface, #181924);
@@ -261,7 +287,11 @@ body { background: <span class="tok-at">@event</span>.theme(dark); }</pre>
 <span class="tok-at">@import</span>((*) from icon-mask)
 <span class="tok-at">@import</span>((form-root, form-group, form-input, form-label, form-float, form-btn-primary) from form)</pre>
         </div>
+        <p>Registry names need no quotes: <code>st-core@v2</code>, <code>circle-progress</code>, <code>icon-mask</code>, <code>overlapui</code>, <code>fscss:micros</code>. Paths and CDN URLs use quotes. Prefer selective imports in production.</p>
         <p>Use <code>((*))</code> while exploring; switch to named mixins when you know the surface area. Prefixes (<code>@st-*</code>, <code>@progress-*</code>, <code>@icon-*</code>, <code>@form-*</code>) avoid collisions.</p>
+        <div class="code">
+          <pre><span class="tok-at">@import</span>((mirror, stagger, alpha) from fscss:micros)</pre>
+        </div>
       </section>
 
       <section class="t-step" id="template">
@@ -418,7 +448,8 @@ npx serve .</pre>
               <tr><th>Piece</th><th>Role</th><th>Requires</th></tr>
             </thead>
             <tbody>
-              <tr><td class="mono">FSCSS language</td><td>@define, @arr, @event, pattern, num</td><td>1.2.4+</td></tr>
+              <tr><td class="mono">FSCSS language</td><td>@define, @arr, @event, pattern, num, shorthands</td><td>1.2.6+</td></tr>
+              <tr><td class="mono">FSCSS IDE</td><td>Multi-file, libck / xfcmd, export</td><td>browser</td></tr>
               <tr><td class="mono">st-core@v2</td><td>Array charts, stat tokens</td><td>1.2.3+</td></tr>
               <tr><td class="mono">st-core.fscss (v1)</td><td>Legacy fixed-point demos</td><td>still supported</td></tr>
               <tr><td class="mono">icon-mask.fscss</td><td>Mask icons</td><td>module pack</td></tr>
@@ -433,7 +464,12 @@ npx serve .</pre>
         <div class="t-step-tag">Next</div>
         <h2>Create a module · join core Discussions</h2>
         <p><a class="btn btn-primary" href="/create-module">How to create an FSCSS module →</a></p>
-        <p style="margin-top:14px;">Core engine Q&amp;A: <a href="https://github.com/Figsh/xfscss/discussions" target="_blank" rel="noopener">Figsh/xfscss Discussions</a>. Modules org: <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener">fscss-ttr</a>.</p>
+        <p style="margin-top:14px;">
+          <a href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">Open the IDE</a> ·
+          <a href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">xfcmds guide</a> ·
+          <a href="https://github.com/Figsh/xfscss/discussions" target="_blank" rel="noopener">Discussions</a> ·
+          <a href="https://github.com/fscss-ttr" target="_blank" rel="noopener">fscss-ttr</a>
+        </p>
       </section>
 
       <div class="next-nav">
@@ -491,7 +527,7 @@ npx serve .</pre>
     </div>
   </div>
 </footer>
-<script src="assets/js/global.js"></script>
-</body>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/global.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4d334893aba2869',t:'MTc5MjQ0ODc5NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
 
