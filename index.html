@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FSCSS Hub — Learn FSCSS, modules, IDE &amp; build real UI</title>
-  <meta name="description" content="Hands-on hub for FSCSS: syntax, shorthands, useful modules (st-core, overlapui, circle-progress, customizable), browser IDE with libck/xfcmd package automation, tutorials and templates. Compile to plain CSS.">
+  <meta name="description" content="Hands-on hub for FSCSS: syntax, shorthands, useful modules (st-core, ai-ui, overlapui, circle-progress, customizable), browser IDE with libck/xfcmd, tutorials and templates. Compile to plain CSS.">
 
   <!-- SEO / Canonical -->
   <link rel="canonical" href="https://hub.devtem.org/">
@@ -86,7 +86,7 @@
   .strip-logos a span.dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
 
   /* pillars */
-  .pillars{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pillars{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
   .pillar-num{ font-family: var(--font-mono); color: var(--muted); font-size: 12.5px; margin-bottom: 14px; }
   .pillar h3{ font-family: var(--font-display); font-size: 19px; margin-bottom: 10px; }
   .pillar p{ color: var(--text-dim); font-size: 14.5px; }
@@ -188,6 +188,8 @@
       <a href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">IDE</a>
       <a href="tutorial">Tutorial</a>
       <a href="create-module">Create module</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#resources">Resources</a>
     </nav>
 
     <div class="nav-actions">
@@ -209,23 +211,24 @@
       <div data-reveal>
         <span class="eyebrow">Figured Shorthand CSS · Learning &amp; build hub</span>
         <h1>Write shorthand.<br>Ship <em>real CSS</em>.</h1>
-        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs — charts, icons, rings, forms, overlap stacks. Use the <a href="https://fscss.devtem.org/ide" style="color:var(--accent-2)">browser IDE</a> for multi-file work and <code class="mono">libck</code> / <code class="mono">xfcmd</code> package setup, or the CDN/CLI for pages. <strong>1.2.6+</strong> tightens imports and IDE automation; <strong>1.2.5+</strong> shipped axis &amp; property shorthands (<code class="mono">mx</code>, <code class="mono">px</code>, <code class="mono">stack</code>, <code class="mono">rounded</code>, …).</p>
+        <p class="lead">A place to <strong>start with FSCSS</strong>, see it compile to real CSS, and try small UI packs — charts, icons, rings, forms, overlap stacks. Use the <a href="https://fscss.devtem.org/ide" style="color:var(--accent-2)">browser IDE</a> for multi-file work and <code class="mono">libck</code> / <code class="mono">xfcmd</code> package setup, or the CDN/CLI for pages. <strong>1.2.6</strong> tightens imports and IDE automation; <strong>1.2.5</strong> shipped axis &amp; property shorthands (<code class="mono">mx</code>, <code class="mono">px</code>, <code class="mono">stack</code>, <code class="mono">rounded</code>, …).</p>
 
         <div class="hero-cta">
           <a class="btn btn-primary" href="https://fscss.devtem.org/ide" target="_blank" rel="noopener">Open the FSCSS IDE</a>
+          <a class="btn btn-ghost" href="https://marketplace.visualstudio.com/items?itemName=Figsh.fscss" target="_blank" rel="noopener">VScode Extention</a>
           <a class="btn btn-ghost" href="tutorial">Full tutorial</a>
           <a class="btn btn-ghost" href="#modules">Browse modules</a>
         </div>
 
         <div class="install-line">
           <div class="code">
-            <pre><span class="tok-com">$</span> npm install <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c2d7c7d7d7e4958a968a91">[email&#160;protected]</a></pre>
+            <pre><span class="tok-com">$</span> npm install fscss@1.2.6</pre>
           </div>
           <button class="copy-btn" data-copy>copy</button>
         </div>
 
         <div class="hero-stats">
-          <div><b>1.2.6+</b><span>language on npm / CDN / IDE</span></div>
+          <div><b>1.2.6</b><span>language on npm / CDN / IDE</span></div>
           <div><b>IDE + CLI</b><span>prototype, then ship plain CSS</span></div>
           <div><b>libck / xfcmd</b><span>enable packs in one prompt</span></div>
           <div><b>0</b><span>required app JS for styles</span></div>
@@ -314,6 +317,8 @@ libck st-core
 yes
 libck overlapui
 yes
+libck ai-ui
+yes
 xfcmd list</pre>
       </div>
       <div class="hero-cta" style="margin-top: 18px;" data-reveal>
@@ -348,9 +353,18 @@ xfcmd list</pre>
           <h3>circle-progress · pattern()</h3>
           <p><strong>circle-progress</strong> for pies and steps (<code class="mono">libck circle-progress</code>). Language-level <strong>pattern()</strong> (and <code class="mono">@match</code>) when you describe a control instead of only calling a mixin by name.</p>
         </div>
+        <div class="card pillar" data-reveal>
+          <div class="pillar-num">AI surfaces</div>
+          <h3>ai-ui.fscss</h3>
+          <p>Chat / copilot chrome only — shell, messages, prompt, stream, citations, artifacts. No models or clients. Compose with <code class="mono">st-core</code> for ops charts. IDE: <code class="mono">libck ai-ui</code>.</p>
+        </div>
       </div>
-      <p data-reveal style="margin-top: 18px; font-size: 14px; color: var(--text-dim); max-width: 640px;">
-        Also handy: <code class="mono">overlapui</code> (<code class="mono">libck overlapui</code>), <code class="mono">form</code>, <code class="mono">customizable</code>, <code class="mono">cube</code>, <code class="mono">fscss:micros</code> — same idea: enable in the IDE or import by registry name, compile, ship CSS.
+      <p data-reveal style="margin-top: 18px; font-size: 14px; color: var(--text-dim); max-width: 720px;">
+        Also handy: <code class="mono">ai-ui</code> (AI chrome: shell, messages, prompt —
+        <code class="mono">libck ai-ui</code>),
+        <code class="mono">overlapui</code>, <code class="mono">form</code>,
+        <code class="mono">customizable</code>, <code class="mono">cube</code>,
+        <code class="mono">fscss:micros</code> — enable in the IDE or import by registry name, compile, ship CSS.
         <a href="#modules" style="color:var(--accent-2);">See modules below</a> ·
         <a href="tutorial" style="color:var(--accent-2);">Tutorial</a>
       </p>
@@ -395,7 +409,7 @@ xfcmd list</pre>
 }</pre>
       </div>
       <p data-reveal style="margin-top: 14px; font-size: 14px; color: var(--text-dim);">
-        Install: <code class="mono">npm install <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771104140404374659455942">[email&#160;protected]</a></code> · CDN: <code class="mono">cdn.jsdelivr.net/npm/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a1b4a4b4b487f6e9f5e9f2">[email&#160;protected]</a>/runtime.min.js</code> ·
+        Install: <code class="mono">npm install fscss@1.2.6</code> · CDN: <code class="mono">cdn.jsdelivr.net/npm/fscss@1.2.6/runtime.min.js</code> ·
         <a href="https://fscss.devtem.org/shorthands" target="_blank" rel="noopener" style="color:var(--accent-2);">Full shorthand reference →</a>
       </p>
     </div>
@@ -507,7 +521,7 @@ xfcmd list</pre>
     <div class="wrap">
       <div class="section-head" data-reveal>
         <span class="eyebrow">The module ecosystem</span>
-        <h2>Top-Six modules around the philosophy</h2>
+        <h2>Modules that show what pure CSS can own</h2>
         <p>Each module solves one hard visual problem in pure CSS — data lives in custom properties, shape lives in <code class="mono">clip-path</code>, gradients, and transforms. JavaScript, where it appears at all, only ever writes a variable.</p>
       </div>
 
@@ -668,6 +682,57 @@ xfcmd list</pre>
           </div>
         </article>
 
+
+        <!-- ai-ui -->
+        <article class="module" data-reveal>
+          <div class="module-info">
+            <div class="module-name">ai-ui.fscss</div>
+            <h3>AI product chrome — pure CSS, no model runtime</h3>
+            <p class="desc">
+              Presentation layer for AI SaaS UIs: shell (sidebar + main), message rows, prompt bar,
+              streaming caret, thinking dots, citations, artifacts, workflow nodes, and usage stats.
+              Tokens via <code class="mono">@ai-root</code> / <code class="mono">@ai-compose-*</code> themes
+              (copilot, research, support, dashboard). Your app owns data and model I/O; this module owns look and structure.
+              Pairs cleanly with <code class="mono">st-core@v2</code>, <code class="mono">circle-progress</code>, and <code class="mono">overlapui</code>.
+            </p>
+            <div class="module-mixins">
+              <span class="pill">@ai-compose-copilot</span>
+              <span class="pill">@ai-shell</span>
+              <span class="pill">@ai-messages</span>
+              <span class="pill">@ai-prompt</span>
+              <span class="pill">@ai-stream</span>
+              <span class="pill">@ai-citations</span>
+              <span class="pill">@ai-artifacts</span>
+            </div>
+            <div class="code">
+              <div class="code-head">import<button class="copy-btn" data-copy=".m-aiui">copy</button></div>
+              <pre class="m-aiui"><span class="tok-at">@import</span>((*) from ai-ui)
+
+<span class="tok-at">@ai-compose-copilot</span>()
+<span class="tok-at">@ai-shell</span>(.ai-shell)
+<span class="tok-at">@ai-main</span>(.ai-main)
+<span class="tok-at">@ai-messages</span>(.ai-messages)
+<span class="tok-at">@ai-message</span>(.ai-message)
+<span class="tok-at">@ai-message-user</span>(.ai-message-user)
+<span class="tok-at">@ai-message-assistant</span>(.ai-message-assistant)
+<span class="tok-at">@ai-bubble</span>(.ai-bubble)
+<span class="tok-at">@ai-prompt</span>(.ai-prompt)
+<span class="tok-at">@ai-prompt-box</span>(.ai-prompt-box)
+<span class="tok-at">@ai-prompt-send</span>(.ai-prompt-send)</pre>
+            </div>
+            <div class="module-links">
+              <a class="btn btn-ghost btn-sm" href="https://github.com/fscss-ttr/ai-ui.fscss" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn btn-ghost btn-sm" href="https://dev.to/fscss/build-an-ai-ops-dashboard-with-fscss-ai-ui-st-core-circle-progress-overlapui-59m5" target="_blank" rel="noopener">AI ops dashboard write-up</a>
+            </div>
+          </div>
+          <div class="module-shot">
+            <img src="https://raw.githubusercontent.com/fscss-ttr/ai-ui.fscss/main/preview.jpg"
+                 alt="ai-ui.fscss copilot shell"
+                 loading="lazy" decoding="async"
+                 onerror="this.style.display='none'; this.parentElement.style.minHeight='200px'; this.parentElement.style.background='var(--surface-2)'">
+          </div>
+        </article>
+
         <!-- cube -->
         <article class="module" data-reveal>
           <div class="module-info">
@@ -720,6 +785,7 @@ xfcmd list</pre>
             <li><b>03</b> <span><code class="mono">circle-progress.fscss</code> shows progress toward the next payout threshold — one class name, no manual color logic.</span></li>
             <li><b>04</b> <span><code class="mono">form.fscss</code> handles the "Request withdrawal" form — floating label, validation state, submit button.</span></li>
             <li><b>05</b> <span><code class="mono">cube.fscss</code> adds a small rotating badge when a creator hits a milestone — a detail, not the centerpiece.</span></li>
+            <li><b>06</b> <span><code class="mono">ai-ui.fscss</code> supplies the chat / agent shell when the product is AI-shaped — compose with st-core for usage charts on the same page.</span></li>
           </ol>
 
           <div class="code" style="margin-top: 26px;">
@@ -730,7 +796,9 @@ xfcmd list</pre>
 <span class="tok-at">@import</span>((form-root, form-group, form-input,
          form-label, form-float, form-btn-primary) from form)
 <span class="tok-at">@import</span>((cube-root, cube-wrapper, cube-face-front,
-         cube-micro-glass) from cube)</pre>
+         cube-micro-glass) from cube)
+<span class="tok-at">@import</span>((*) from ai-ui)
+<span class="tok-com">/* @ai-compose-dashboard() or @ai-compose-copilot() + shell helpers */</span></pre>
           </div>
 
           <div class="module-links" style="margin-top: 4px;">
@@ -750,7 +818,7 @@ xfcmd list</pre>
   <section class="section" id="ecosystem">
     <div class="wrap">
       <div class="section-head" data-reveal>
-        <span class="eyebrow">The Figsh network</span>
+        <span class="eyebrow">The network</span>
         <h2>Where FSCSS is actually running in production</h2>
         <p>FSCSS isn't a demo-only project — it's the styling layer under a working set of live products.</p>
       </div>
@@ -827,6 +895,14 @@ xfcmd list</pre>
           <div class="article-row">
             <a class="title" href="https://fscss.devtem.org/xfcmds-guide" target="_blank" rel="noopener">xfcmds — libck, libon, .xfcmd package scripts</a>
             <span class="tag">xfcmd</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://github.com/fscss-ttr/ai-ui.fscss" target="_blank" rel="noopener">ai-ui.fscss — pure-CSS AI interface (shell, messages, prompt, stream)</a>
+            <span class="tag">ai-ui</span>
+          </div>
+          <div class="article-row">
+            <a class="title" href="https://dev.to/fscss/build-an-ai-ops-dashboard-with-fscss-ai-ui-st-core-circle-progress-overlapui-59m5" target="_blank" rel="noopener">Build an AI ops dashboard with ai-ui + st-core + circle-progress + overlapui</a>
+            <span class="tag">dev.to/fscss</span>
           </div>
           <div class="article-row">
             <a class="title" href="https://fscss.devtem.org/libraries" target="_blank" rel="noopener">Libraries registry — import by name</a>
@@ -1043,4 +1119,3 @@ xfcmd list</pre>
 </script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4d2fedfaa00a8c2',t:'MTc5MjQ0NjU5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
